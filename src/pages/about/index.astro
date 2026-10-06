@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { site, href } from '../../site';
+import { photos } from '../../data/photos';
+import { values, roles } from '../../data/content';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const schema = [{ '@type': 'AboutPage', name: `About ${site.name}`, url: new URL(href('/about'), Astro.site).href }];
+---
+
+<Base title="About Us | Heaven Nursing Care 24/7, Lahore" description="Heaven Nursing Care 24/7 brings professional, compassionate healthcare to homes across Lahore. Meet the people and values behind our care." schema={schema}>
+  <PageHero
+    eyebrow="About us"
+    title="Professional healthcare, at the heart of home"
+    subtitle="We bring doctors, nurses and caregivers to families across Lahore, so patients are cared for with skill and dignity where they feel most at ease."
+    crumbs={[{ label: 'About us' }]}
+    image={photos.caregiverSofa}
+    imageAlt="A caregiver sitting with an elderly woman on her sofa at home"
+    imagePosition="70% center"
+  />
+
+  <section class="section" aria-labelledby="why-title">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <SectionHeader id="why-title" eyebrow="Why we exist" title="Because getting good care shouldn't mean leaving home" />
+        <div class="prose-care mt-6" data-reveal style="--i:3">
+          <p>For an elderly parent, a patient just home from surgery, or someone living with a long-term illness, a trip to hospital for an injection, a dressing or a check-up can take a whole day, and a lot out of them.</p>
+          <p>Families try to cope, often with an untrained attendant, a cousin who “knows a bit”, or by taking time off work. Too often the patient's care is a worry, not a comfort.</p>
+          <p><strong>Heaven Nursing Care 24/7 exists to change that.</strong> We bring the right healthcare professional to the doorstep, matched to the patient's needs and accountable to the family, day or night.</p>
+        </div>
+      </div>
+      <div class="arch-soft relative aspect-[4/5] overflow-hidden bg-primary-soft" data-reveal>
+        <Image src={photos.holdingHand} alt="A nurse holding a patient's hand at the bedside" widths={[480, 720, 960]} sizes="(min-width:1024px) 45vw, 92vw" class="h-full w-full object-cover" data-parallax />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-night text-white" aria-labelledby="mission-title">
+    <div class="container-x text-center">
+      <p class="eyebrow mb-6 justify-center !text-accent">Our commitment</p>
+      <h2 id="mission-title" class="sr-only">Our commitment</h2>
+      <blockquote class="mx-auto max-w-4xl font-display text-3xl leading-tight font-medium text-white sm:text-4xl lg:text-5xl" data-reveal>
+        “Professional Healthcare. Compassionate Care. At Your Home.”
+      </blockquote>
+      <p class="mx-auto mt-8 max-w-3xl text-lg text-white/80" data-reveal style="--i:1">
+        Our mission is to make professional healthcare accessible in the comfort of your home. From doctor home visits and nursing care to injections, BP and sugar monitoring, NG tube and catheter care, wound dressing, elderly care and post-surgical care, we aim to provide reliable and compassionate support according to each patient's needs.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="values-title">
+    <div class="container-x">
+      <SectionHeader id="values-title" eyebrow="Our values" title="What every visit stands for" center />
+      <ul class="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-5">
+        {values.map((v, i) => (
+          <li class="card p-6 text-center" data-reveal style={`--i:${i}`}>
+            <span class="mx-auto grid size-14 place-items-center rounded-2xl bg-primary-soft text-primary"><Icon name={v.icon} size={28} /></span>
+            <h3 class="h3 mt-4">{v.title}</h3>
+            <p class="mt-1.5 text-[0.98rem] text-muted">{v.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="glance-title">
+    <div class="container-x grid gap-12 lg:grid-cols-2">
+      <div>
+        <SectionHeader id="glance-title" eyebrow="What we do" title="One team. Five kinds of professionals. Eleven home services." text="From a single injection to round-the-clock nursing, everything is coordinated by one team, so families have one number to call." />
+        <div class="mt-8 flex flex-wrap gap-3" data-reveal style="--i:3">
+          <a href={href('/services')} class="btn btn-primary">Our services</a>
+          <a href={href('/about/care-team')} class="btn btn-outline">Our care team</a>
+        </div>
+      </div>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {roles.map((r, i) => (
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4" data-reveal style={`--i:${i}`}>
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary"><Icon name={r.icon} size={20} /></span>
+            <span><span class="block font-semibold text-ink">{r.name}</span><span class="text-[0.95rem] text-muted">{r.summary}</span></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="oversight-title">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <div class="arch-soft relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden bg-primary-soft" data-reveal>
+        <Image src={photos.doctor} alt="Smiling doctor in a hijab with a stethoscope" widths={[480, 720]} sizes="(min-width:1024px) 35vw, 90vw" class="h-full w-full object-cover" />
+      </div>
+      <div>
+        <SectionHeader id="oversight-title" eyebrow="Clinical oversight" title="Care plans overseen by experienced clinicians" text="A senior nurse and a doctor review each care plan, support our staff on complex cases, and are on hand when a patient's needs change." />
+        <ul class="mt-8 space-y-4" data-reveal style="--i:3">
+          <li class="flex gap-3"><Icon name="badge-check" size={22} class="mt-0.5 shrink-0 text-primary" /><span><strong class="text-ink">Verified staff:</strong> qualifications, CNIC and references checked before anyone joins.</span></li>
+          <li class="flex gap-3"><Icon name="shield-check" size={22} class="mt-0.5 shrink-0 text-primary" /><span><strong class="text-ink">Safe procedures:</strong> clinical tasks only by qualified nurses, medicines only as prescribed.</span></li>
+          <li class="flex gap-3"><Icon name="messages-square" size={22} class="mt-0.5 shrink-0 text-primary" /><span><strong class="text-ink">Families informed:</strong> daily updates and an immediate call if anything changes.</span></li>
+        </ul>
+        <a href={href('/about/quality-and-safety')} class="link mt-8 inline-block">Our quality & safety standards →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight bg-cream" aria-labelledby="office-title">
+    <div class="container-x grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+      <div>
+        <h2 id="office-title" class="h2">Visit our office</h2>
+        <p class="mt-3 text-lg text-muted">{site.address.full} · Office hours {site.officeHours} · Phone & WhatsApp 24/7</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href={site.directionsUrl} class="btn btn-outline" target="_blank" rel="noopener"><Icon name="navigation" size={18} />Get directions</a>
+        <a href={href('/contact')} class="btn btn-primary">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

@@ -1,0 +1,195 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { site, href, waLink, lcFirst } from '../../site';
+import { situations } from '../../data/content';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import IconTile from '../../components/IconTile.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import VitalsPanel from '../../components/VitalsPanel.astro';
+import FaqList from '../../components/FaqList.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import EmergencyNotice from '../../components/EmergencyNotice.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({ params: { slug: service.id }, props: { service, all: services } }));
+}
+
+const { service, all } = Astro.props;
+const { data } = service;
+const { Content } = await render(service);
+const related = data.related.map((slug) => all.find((s) => s.id === slug)!).filter(Boolean);
+const testimonials = (await getCollection('testimonials')).filter((t) => t.data.service === service.id);
+const bookUrl = href(`/book-a-visit?service=${service.id}`);
+const wa = waLink(data.wa.message, data.wa.code);
+const faqItems = data.faqs.map((f, i) => ({ id: `${service.id}-faq-${i + 1}`, question: f.q, answer: f.a }));
+const pageUrl = new URL(href(`/services/${service.id}`), Astro.site).href;
+const bizId = new URL(href('/'), Astro.site).href + '#business';
+const reviewed = new Date(site.lastReviewed).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+const schema = [
+  {
+    '@type': 'Service',
+    name: data.title,
+    serviceType: data.title,
+    description: data.subhead,
+    url: pageUrl,
+    provider: { '@id': bizId },
+    areaServed: { '@type': 'City', name: 'Lahore' },
+  },
+  {
+    '@type': 'MedicalWebPage',
+    name: data.h1,
+    url: pageUrl,
+    lastReviewed: site.lastReviewed,
+    reviewedBy: { '@type': 'Organization', name: site.name },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: data.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Base title={data.seo.title} description={data.seo.description} schema={schema}>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-sky">
+    <div class="container-x relative grid items-center gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
+      <div>
+        <Breadcrumbs items={[{ label: 'Services', href: href('/services') }, { label: data.title }]} />
+        <div class="mt-8 flex items-center gap-4 lg:hidden">
+          <IconTile icon={`healthicons:${data.icon}`} size="lg" transitionName={`icon-${service.id}`} />
+        </div>
+        <h1 class="h1 mt-6 max-w-2xl">{data.h1}</h1>
+        <p class="lead mt-5 max-w-2xl">{data.subhead}</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href={bookUrl} class="btn btn-primary">Book {lcFirst(data.title)}<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
+          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="service"><Icon name="message-circle" size={20} />Ask on WhatsApp</a>
+        </div>
+        <ul class="mt-8 flex flex-wrap gap-2">
+          <li class="chip"><Icon name="user-round" size={16} class="text-primary" /><span><span class="text-muted">Provided by:</span> {data.providedBy.join(', ')}</span></li>
+          <li class="chip"><Icon name="calendar-clock" size={16} class="text-primary" />{data.availableAs}</li>
+          <li class="chip"><Icon name="map-pin" size={16} class="text-primary" />Across Lahore</li>
+        </ul>
+      </div>
+      <div class="relative">
+        {data.code === 'S04' ? (
+          <VitalsPanel />
+        ) : (
+          <div class="relative mx-auto max-w-md">
+            <div class="arch-soft aspect-[4/5] overflow-hidden bg-primary-soft shadow-[var(--shadow-lift)]">
+              <Image src={data.photo} alt={data.photoAlt} widths={[480, 720, 960]} sizes="(min-width:1024px) 38vw, 90vw" class="h-full w-full object-cover" loading="eager" fetchpriority="high" />
+            </div>
+            <div class="absolute -bottom-6 -left-6 hidden lg:block">
+              <IconTile icon={`healthicons:${data.icon}`} size="xl" transitionName={`icon-${service.id}`} class="svc-hero-icon" />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Body + sticky booking card -->
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_360px]">
+      <div class="min-w-0">
+        <h2 class="h2">What is {lcFirst(data.title)}?</h2>
+        <div class="prose-care mt-6"><Content /></div>
+
+        <h2 class="h2 mt-16">What's included</h2>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+          {data.included.map((item, i) => (
+            <li class="flex items-start gap-3 rounded-2xl border border-line p-4" data-reveal style={`--i:${i % 6}`}>
+              <span class="grid size-7 shrink-0 place-items-center rounded-full bg-primary text-white"><Icon name="check" size={16} /></span>
+              <span class="text-ink">{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <h2 class="h2 mt-16">Who it's for</h2>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {data.forWho.map((w) => {
+            const s = situations.find((x) => x.id === w.anchor);
+            const to = w.anchor === 'families-abroad' ? href('/who-we-care-for/overseas-families') : href(`/who-we-care-for#${w.anchor}`);
+            return <li><a href={to} class="chip hover:border-primary hover:text-primary" title={s?.tile}>{w.label}<Icon name="arrow-right" size={14} /></a></li>;
+          })}
+        </ul>
+
+        <h2 class="h2 mt-16">How it works</h2>
+        <ol class="mt-8 grid gap-6 sm:grid-cols-2">
+          {data.steps.map((st, i) => (
+            <li class="flex gap-4" data-reveal style={`--i:${i}`}>
+              <span class="grid size-11 shrink-0 place-items-center rounded-full bg-accent font-display text-lg font-semibold text-ink">{i + 1}</span>
+              <span><span class="block font-semibold text-ink">{st.title}</span><span class="text-muted">{st.text}</span></span>
+            </li>
+          ))}
+        </ol>
+
+        <div class="mt-16 flex items-start gap-4 rounded-[var(--radius-card)] border border-primary/20 bg-primary-soft/50 p-6">
+          <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-primary text-white"><Icon name="shield-check" size={24} /></span>
+          <div>
+            <h2 class="text-xl font-semibold text-ink">Safety & clinical standards</h2>
+            <p class="mt-1.5 text-ink/80">{data.safety}</p>
+            <a href={href('/about/quality-and-safety')} class="link mt-2 inline-block text-[0.98rem]">Our quality & safety standards →</a>
+          </div>
+        </div>
+
+        <h2 class="h2 mt-16">Questions about {lcFirst(data.title)}</h2>
+        <FaqList items={faqItems} class="mt-6" />
+
+        <p class="mt-10 flex items-center gap-2 text-[0.95rem] text-muted">
+          <Icon name="badge-check" size={18} class="text-primary" />
+          Medically reviewed by {site.reviewedBy} · Last reviewed {reviewed}
+        </p>
+      </div>
+
+      <aside class="lg:sticky lg:top-[calc(var(--header-h)+24px)] lg:self-start">
+        <div class="card p-6">
+          <p class="font-display text-2xl font-medium text-ink">Book {lcFirst(data.title)}</p>
+          <p class="mt-2 text-muted">Tell us what's needed and we'll confirm a time, usually the same or next day.</p>
+          <div class="mt-5 space-y-3">
+            <a href={bookUrl} class="btn btn-primary btn-block">Book a home visit</a>
+            <a href={wa} class="btn btn-wa btn-block" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp us</a>
+            <a href={site.phone.href} class="btn btn-outline btn-block"><Icon name="phone" size={18} />{site.phone.display}</a>
+          </div>
+          <dl class="mt-6 space-y-3 border-t border-line pt-5 text-[0.98rem]">
+            <div><dt class="text-sm font-semibold text-muted">Provided by</dt><dd class="text-ink">{data.providedBy.join(', ')}</dd></div>
+            <div><dt class="text-sm font-semibold text-muted">Available as</dt><dd class="text-ink">{data.availableAs}</dd></div>
+            <div><dt class="text-sm font-semibold text-muted">Phone & WhatsApp</dt><dd class="text-ink">Open 24/7</dd></div>
+          </dl>
+          <EmergencyNotice class="mt-5 !text-sm" />
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {testimonials.length > 0 && (
+    <section class="section bg-cream pt-16" aria-labelledby="t-title">
+      <div class="container-x">
+        <SectionHeader id="t-title" eyebrow="Testimonials" title="From families we've cared for" />
+        <div class="mt-8"><Testimonials service={service.id} /></div>
+      </div>
+    </section>
+  )}
+
+  <section class="section bg-sky" aria-labelledby="related-title">
+    <div class="container-x">
+      <SectionHeader id="related-title" eyebrow="Related services" title="Often combined with" />
+      <ul class="mt-10 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3">
+        {related.map((s, i) => <li><ServiceCard service={s} index={i} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title={`Need ${lcFirst(data.title)} at home?`} bookLabel={`Book ${lcFirst(data.title)}`} bookHref={bookUrl} waMessage={data.wa.message} waRef={data.wa.code} waLabel="Ask on WhatsApp" />
+</Base>
+
+<style>
+  :global(html[data-motion="A"]) .svc-hero-icon { animation: icon-float 6s ease-in-out infinite; }
+  @keyframes icon-float { 50% { transform: translateY(-6px); } }
+</style>

@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import { href } from '../site';
+import { iconSvg } from '../lib/icons';
+import CareFinder from './CareFinder';
+
+const services = (await getCollection('services')).map((s) => ({
+  slug: s.id,
+  title: s.data.title,
+  card: s.data.card,
+  url: href(`/services/${s.id}`),
+  icon: `<span class="icon-tile" style="width:44px;height:44px">${iconSvg(`healthicons:${s.data.icon}`, { size: 24 })}</span>`,
+}));
+---
+
+<CareFinder client:visible services={services} />
+
+<style is:global>
+  .cf-step { animation: cf-in 320ms var(--ease-out); }
+  @keyframes cf-in { from { opacity: 0; translate: 16px 0; } }
+  .cf-result { animation: cf-in 400ms var(--ease-out) both; }
+  html[data-motion="C"] .cf-step, html[data-motion="C"] .cf-result { animation-duration: 150ms; translate: none; }
+</style>

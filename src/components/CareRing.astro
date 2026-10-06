@@ -1,0 +1,84 @@
+---
+// M29 — 24-hour care ring: shows exactly which hours each care option covers (no prices).
+import { href } from '../site';
+import { plans } from '../data/content';
+
+const R = 110;
+const C = 2 * Math.PI * R;
+const arc = (start: number, end: number) => {
+  const len = ((end - start) / 24) * C;
+  return { dash: `${len} ${C - len}`, offset: -(start / 24) * C };
+};
+const first = arc(plans[1].start, plans[1].end);
+const ticks = Array.from({ length: 24 }, (_, h) => h);
+const labels = [
+  { h: 0, t: '12 am' }, { h: 6, t: '6 am' }, { h: 12, t: '12 pm' }, { h: 18, t: '6 pm' },
+];
+const pt = (h: number, r: number) => {
+  const a = (h / 24) * 2 * Math.PI - Math.PI / 2;
+  return [140 + r * Math.cos(a), 140 + r * Math.sin(a)];
+};
+---
+
+<div class="care-ring grid items-center gap-10 lg:grid-cols-[auto_1fr]" data-ring data-plans={JSON.stringify(plans.map((p) => ({ id: p.id, ...arc(p.start, p.end), label: p.ringLabel })))}>
+  <div class="relative mx-auto w-[280px] sm:w-[320px]">
+    <svg viewBox="0 0 280 280" class="w-full" role="img" aria-labelledby="ring-label">
+      <circle cx="140" cy="140" r={R} fill="none" stroke="var(--color-sky)" stroke-width="26"></circle>
+      <circle
+        class="ring-arc" cx="140" cy="140" r={R} fill="none" stroke="url(#ring-grad)" stroke-width="26" stroke-linecap="butt"
+        stroke-dasharray={first.dash} stroke-dashoffset={first.offset} transform="rotate(-90 140 140)" data-ring-arc
+      ></circle>
+      <defs>
+        <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#18918b"></stop><stop offset="1" stop-color="#0a4f4c"></stop></linearGradient>
+      </defs>
+      {ticks.map((h) => {
+        const [x1, y1] = pt(h, 82); const [x2, y2] = pt(h, h % 6 === 0 ? 72 : 77);
+        return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-muted)" stroke-opacity={h % 6 === 0 ? 0.8 : 0.35} stroke-width="1.5"></line>;
+      })}
+      {labels.map((l) => { const [x, y] = pt(l.h, 58); return <text x={x} y={y + 4} text-anchor="middle" font-size="11" fill="var(--color-muted)" font-weight="600">{l.t}</text>; })}
+    </svg>
+    <p id="ring-label" class="pointer-events-none absolute inset-0 grid place-items-center px-20 text-center font-display text-lg font-medium leading-tight text-ink" aria-live="polite" data-ring-label>{plans[1].ringLabel}</p>
+  </div>
+
+  <div>
+    <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Care option">
+      {plans.map((p, i) => (
+        <label class="choice">
+          <input type="radio" name="ring-plan" value={p.id} checked={i === 1} />
+          <span>{p.name}</span>
+        </label>
+      ))}
+    </div>
+    {plans.map((p, i) => (
+      <div class="mt-6" data-ring-panel={p.id} hidden={i !== 1}>
+        <p class="text-sm font-semibold uppercase tracking-[0.12em] text-primary">{p.hours}</p>
+        <p class="mt-2 text-xl font-semibold text-ink">{p.bestFor}</p>
+        <p class="mt-2 text-muted"><strong class="text-ink">Who:</strong> {p.who}</p>
+        <ul class="mt-4 flex flex-wrap gap-2">{p.examples.map((e) => <li class="chip">{e}</li>)}</ul>
+        <a href={href(`/book-a-visit?plan=${p.id}`)} class="btn btn-primary mt-6">Get this plan</a>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ring-arc { transition: stroke-dasharray 600ms var(--ease-in-out), stroke-dashoffset 600ms var(--ease-in-out); }
+</style>
+
+<script>
+  for (const ring of document.querySelectorAll<HTMLElement>('[data-ring]')) {
+    const plans = JSON.parse(ring.dataset.plans ?? '[]') as { id: string; dash: string; offset: number; label: string }[];
+    const arcEl = ring.querySelector<SVGCircleElement>('[data-ring-arc]')!;
+    const label = ring.querySelector<HTMLElement>('[data-ring-label]')!;
+    ring.querySelectorAll<HTMLInputElement>('input[name="ring-plan"]').forEach((input) =>
+      input.addEventListener('change', () => {
+        const p = plans.find((x) => x.id === input.value);
+        if (!p) return;
+        arcEl.setAttribute('stroke-dasharray', p.dash);
+        arcEl.setAttribute('stroke-dashoffset', String(p.offset));
+        label.textContent = p.label;
+        ring.querySelectorAll<HTMLElement>('[data-ring-panel]').forEach((el) => (el.hidden = el.dataset.ringPanel !== p.id));
+      }),
+    );
+  }
+</script>

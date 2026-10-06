@@ -1,0 +1,59 @@
+---
+// M32 — "A day of updates": generic chat UI (not WhatsApp trade dress), plays once, labelled as an example.
+import Icon from './Icon.astro';
+
+interface Props { short?: boolean }
+const { short = false } = Astro.props;
+const all = [
+  { t: '8:05 am', text: "Good morning! Ammi's BP is 128/82 and fasting sugar 110. Breakfast done ✓" },
+  { t: '11:20 am', text: 'Short walk in the garden with her walker. She’s in good spirits today 🌤', full: true },
+  { t: '1:30 pm', text: 'Doctor’s visit complete. No change to medicines. Summary attached 📄' },
+  { t: '6:00 pm', text: 'Evening medicines given on time ✓', full: true },
+  { t: '9:10 pm', text: 'Dressing changed. Resting comfortably. Goodnight 🌙' },
+];
+const msgs = short ? all.filter((m) => !m.full) : all;
+---
+
+<figure class="chat mx-auto w-full max-w-[360px]" data-chat>
+  <div class="overflow-hidden rounded-[2.2rem] border-[10px] border-ink bg-ink shadow-[var(--shadow-lift)]">
+    <div class="flex items-center gap-3 bg-primary px-4 py-3 text-white">
+      <span class="grid size-10 place-items-center rounded-full bg-white/20 font-semibold">HN</span>
+      <span class="flex-1 leading-tight">
+        <span class="block font-semibold">Care updates · Ammi</span>
+        <span class="text-xs text-white/80">Heaven Nursing Care</span>
+      </span>
+      <Icon name="video" size={20} />
+    </div>
+    <ol class="chat-body flex min-h-[340px] flex-col gap-2.5 bg-[#f1ece4] p-3" aria-label="Example care updates">
+      {msgs.map((m) => (
+        <li class="chat-msg" data-msg>
+          <p>{m.text}</p>
+          <time class="mt-1 block text-right text-[0.72rem] text-muted">{m.t}</time>
+        </li>
+      ))}
+      <li class="chat-msg chat-me" data-msg><p>Thank you so much! 🙏</p><time class="mt-1 block text-right text-[0.72rem] text-white/70">9:12 pm</time></li>
+      <li class="chat-typing" data-typing hidden aria-hidden="true"><span></span><span></span><span></span></li>
+    </ol>
+  </div>
+  <figcaption class="mt-3 flex items-center justify-center gap-3 text-sm text-muted">
+    Example updates — not real patient data
+    <button type="button" class="font-semibold text-primary underline underline-offset-4" data-chat-replay hidden>Replay</button>
+  </figcaption>
+</figure>
+
+<style>
+  .chat-msg {
+    max-width: 85%; align-self: flex-start; background: white; color: var(--color-ink);
+    border-radius: 16px 16px 16px 4px; padding: 0.55rem 0.8rem; font-size: 0.95rem; line-height: 1.4;
+    box-shadow: 0 1px 1px rgb(16 36 58 / 0.08);
+  }
+  .chat-me { align-self: flex-end; background: var(--color-primary); color: white; border-radius: 16px 16px 4px 16px; }
+  :global(html.js) .chat:not(.is-static) .chat-msg:not(.is-in) { display: none; }
+  .chat-msg.is-in { animation: msg-in 300ms var(--ease-out); }
+  @keyframes msg-in { from { opacity: 0; translate: 0 8px; } }
+  .chat-typing { align-self: flex-start; display: flex; gap: 4px; background: white; border-radius: 16px; padding: 0.75rem 0.9rem; }
+  .chat-typing span { width: 7px; height: 7px; border-radius: 99px; background: var(--color-muted); animation: dot 900ms infinite ease-in-out; }
+  .chat-typing span:nth-child(2) { animation-delay: 150ms; }
+  .chat-typing span:nth-child(3) { animation-delay: 300ms; }
+  @keyframes dot { 0%, 80%, 100% { opacity: 0.3; translate: 0 0; } 40% { opacity: 1; translate: 0 -3px; } }
+</style>

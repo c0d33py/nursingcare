@@ -1,0 +1,250 @@
+---
+import { getCollection } from 'astro:content';
+import { Image, Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { site, href, waLink } from '../site';
+import { photos } from '../data/photos';
+import { categories, situations, roles, reasons } from '../data/content';
+import Icon from '../components/Icon.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CareFinderSection from '../components/CareFinderSection.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import AroundTheClock from '../components/AroundTheClock.astro';
+import Stats from '../components/Stats.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ChatMock from '../components/ChatMock.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const faqs = (await getCollection('faqs')).filter((f) => f.data.home).map((f) => ({ id: f.id, ...f.data }));
+const tileHref = (id: string) => (id === 'families-abroad' ? href('/who-we-care-for/overseas-families') : href(`/who-we-care-for#${id}`));
+const website = { '@type': 'WebSite', name: site.name, url: new URL(href('/'), Astro.site).href };
+---
+
+<Base title="Home Nursing Care in Lahore, 24/7 | Heaven Nursing Care" description={site.description} schema={[website]}>
+  <!-- 1 · Hero (M20 doorway, M21 chips, M22 dawn sky) -->
+  <section class="hero relative overflow-hidden bg-cream" data-hero>
+    <div class="hero-sky" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+    <div class="container-x relative grid items-center gap-12 pt-8 pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:pt-14 lg:pb-24">
+      <div>
+        <p class="eyebrow mb-5">Home nursing & healthcare · Lahore · 24/7</p>
+        <h1 class="display max-w-[13ch]">The care they need, in the home they love.</h1>
+        <p class="lead mt-6 max-w-xl">
+          Heaven Nursing Care 24/7 brings doctors, qualified nurses and trained caregivers to your home in Lahore — for elderly parents, recovery after surgery and long-term care. Tell us what your loved one needs and we'll arrange the right professional.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row" data-hero-ctas>
+          <a href={href('/book-a-visit')} class="btn btn-primary">Book a home visit<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
+          <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="hero"><Icon name="message-circle" size={20} />WhatsApp us</a>
+        </div>
+        <p class="mt-4 text-muted">
+          or call <a href={site.phone.href} class="font-semibold text-ink underline decoration-accent decoration-2 underline-offset-4" data-umami-event="call_click" data-umami-event-placement="hero">{site.phone.display}</a>, day or night
+        </p>
+        <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-[0.98rem] font-semibold text-ink">
+          {['Doctors, nurses & caregivers', 'Day, night & 24-hour care', 'Families kept informed'].map((t) => (
+            <li class="flex items-center gap-2"><span class="grid size-6 place-items-center rounded-full bg-primary text-white"><Icon name="check" size={14} /></span>{t}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="relative mx-auto w-full max-w-[500px]">
+        <div class="hero-arch arch relative aspect-[4/5] bg-primary-soft shadow-[var(--shadow-lift)]" data-hero-media>
+          <Picture
+            src={photos.bpCheckAtHome}
+            formats={['avif', 'webp']}
+            widths={[480, 720, 960, 1200]}
+            sizes="(min-width: 1024px) 40vw, 92vw"
+            alt="A home-care nurse checking an older woman's blood pressure on her sofa at home"
+            class="h-full w-full scale-[1.12] object-cover object-[60%_center]"
+            loading="eager"
+            fetchpriority="high"
+            data-hero-img
+          />
+          <div class="hero-light" aria-hidden="true"></div>
+        </div>
+        <div class="hero-chip glass flex left-[-6%] top-[12%]" style="--d:0s">
+          <span class="chip-icon"><Icon name="heart-pulse" size={20} /></span>
+          <span><span class="block text-xs font-medium text-muted">Blood pressure · example</span><span class="font-semibold text-ink">120/80 · Normal</span></span>
+        </div>
+        <div class="hero-chip glass flex right-[-5%] top-[46%]" style="--d:-2s">
+          <span class="chip-icon"><Icon name="activity" size={20} /></span>
+          <span><span class="block text-xs font-medium text-muted">SpO₂</span><span class="font-semibold text-ink">98%</span></span>
+        </div>
+        <div class="hero-chip glass bottom-[8%] left-[2%] hidden sm:flex" style="--d:-4s">
+          <span class="chip-icon !bg-success"><Icon name="check" size={18} /></span>
+          <span><span class="block text-xs font-medium text-muted">Nurse arrived</span><span class="font-semibold text-ink">9:00 am</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustStrip />
+
+  <!-- 3 · Services overview -->
+  <section class="section" aria-labelledby="services-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionHeader id="services-title" eyebrow="Our services" title="Complete care, brought to your door" text="From a doctor's check-up to wound care, feeding-tube care and round-the-clock nursing — one team, coordinated around your loved one." />
+        <a href={href('/services')} class="link shrink-0">Explore all services →</a>
+      </div>
+      <div class="mt-10 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2" role="group" aria-label="Filter services" data-filter-group="home-services">
+        <button type="button" class="chip shrink-0 aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-white" data-filter="all" aria-pressed="true">All services</button>
+        {Object.entries(categories).map(([k, v]) => (
+          <button type="button" class="chip shrink-0 aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-white" data-filter={k} aria-pressed="false">{v}</button>
+        ))}
+      </div>
+      <ul id="home-services" class="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+        {services.map((s, i) => <li><ServiceCard service={s} index={i} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · Who we care for -->
+  <section class="section bg-sky" aria-labelledby="who-title">
+    <div class="container-x">
+      <SectionHeader id="who-title" eyebrow="Who we care for" title="Whoever needs care, we'll help you get it right" />
+      <ul class="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">
+        {situations.map((s, i) => (
+          <li class="w-[82%] shrink-0 snap-start sm:w-[46%] lg:w-auto" data-reveal style={`--i:${i}`}>
+            <a href={tileHref(s.id)} class="situation group relative block aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] lg:aspect-[5/4]">
+              <Image src={s.photo} alt="" widths={[400, 640, 800]} sizes="(min-width:1024px) 30vw, 80vw" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <span class="absolute inset-0 bg-gradient-to-t from-night/90 via-night/35 to-transparent"></span>
+              <span class="absolute inset-x-0 bottom-0 p-6 text-white">
+                <span class="block font-display text-2xl font-medium">{s.title}</span>
+                <span class="mt-1 block text-[0.98rem] text-white/85">{s.tile}</span>
+                <span class="mt-3 inline-flex items-center gap-1 font-semibold text-accent">See how we help <Icon name="arrow-right" size={16} /></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 · Care Finder -->
+  <section id="care-finder" class="section" aria-labelledby="finder-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <SectionHeader id="finder-title" eyebrow="Care Finder" title="Not sure what kind of care you need?" text="Answer 3 quick questions and we'll suggest the right services. A qualified professional will confirm the plan after an assessment.">
+        <p class="mt-6 text-muted" data-reveal style="--i:3">Prefer to talk? <a href={waLink()} class="link" target="_blank" rel="noopener">WhatsApp us</a> or call {site.phone.display}.</p>
+      </SectionHeader>
+      <CareFinderSection />
+    </div>
+  </section>
+
+  <!-- 6 · How it works -->
+  <section class="section bg-white pt-0" aria-labelledby="hiw-title">
+    <div class="container-x">
+      <SectionHeader id="hiw-title" eyebrow="How it works" title="Getting care started is simple" center />
+      <div class="mt-14"><HowItWorks /></div>
+      <p class="mt-12 text-center"><a href={href('/how-it-works')} class="link">See how it works in detail →</a></p>
+    </div>
+  </section>
+
+  <!-- 7 · Around the clock (M28) -->
+  <AroundTheClock />
+
+  <!-- 8 · Care team -->
+  <section class="section" aria-labelledby="team-title">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div class="arch-soft relative aspect-[4/5] overflow-hidden bg-primary-soft lg:aspect-[5/6]" data-reveal>
+        <Image src={photos.careTeam} alt="Doctors and nurses from the care team smiling together" widths={[480, 720, 960]} sizes="(min-width:1024px) 45vw, 92vw" class="h-full w-full object-cover" data-parallax />
+      </div>
+      <div>
+        <SectionHeader id="team-title" eyebrow="Our care team" title="The right professional for every need" />
+        <ul class="mt-8 space-y-4">
+          {roles.map((r, i) => (
+            <li class="flex gap-4" data-reveal style={`--i:${i}`}>
+              <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-primary-soft text-primary"><Icon name={r.icon} size={24} /></span>
+              <span><span class="block font-semibold text-ink">{r.name}</span><span class="text-muted">{r.summary}</span></span>
+            </li>
+          ))}
+        </ul>
+        <a href={href('/about/care-team')} class="btn btn-outline mt-8">Meet our care team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · Why choose us -->
+  <section class="section bg-cream" aria-labelledby="why-title">
+    <div class="container-x">
+      <SectionHeader id="why-title" eyebrow="Why Heaven" title="Why families in Lahore choose us" center />
+      <ul class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {reasons.map((r, i) => (
+          <li class:list={['rounded-[var(--radius-card)] p-7', { 0: 'bg-primary', 4: 'bg-night' }[i] ?? 'bg-white']} data-reveal style={`--i:${i}`}>
+            <span class:list={['grid size-12 place-items-center rounded-2xl', i === 0 || i === 4 ? 'bg-white/15 text-accent' : 'bg-primary-soft text-primary']}><Icon name={r.icon} size={24} /></span>
+            <h3 class:list={['h3 mt-5', (i === 0 || i === 4) && '!text-white']}>{r.title}</h3>
+            <p class:list={['mt-2', i === 0 || i === 4 ? 'text-white/80' : 'text-muted']}>{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 · Stats (verifiable facts only) -->
+  <section class="section-tight" aria-label="Heaven Nursing Care in numbers">
+    <div class="container-x"><Stats /></div>
+  </section>
+
+  <!-- 11 · Testimonials -->
+  <section class="section pt-6" aria-labelledby="testi-title">
+    <div class="container-x">
+      <SectionHeader id="testi-title" eyebrow="Testimonials" title="In their families' words" />
+      <div class="mt-10"><Testimonials /></div>
+    </div>
+  </section>
+
+  <!-- 12 · Families abroad -->
+  <section class="section overflow-hidden bg-sky" aria-labelledby="abroad-title">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+      <div>
+        <SectionHeader id="abroad-title" eyebrow="Families abroad" title="Living abroad? We'll be there for your parents." text="Arrange and follow your parents' care from anywhere. One coordinator, regular WhatsApp updates, and a qualified team in Lahore you can trust." />
+        <ul class="mt-6 space-y-2.5" data-reveal style="--i:3">
+          {['Daily updates on WhatsApp, in your time zone', 'Video calls with your parent and their carer', 'Doctor visit summaries sent to you', 'Pay from abroad by bank transfer'].map((t) => (
+            <li class="flex items-start gap-2.5"><Icon name="check" size={20} class="mt-1 shrink-0 text-primary" />{t}</li>
+          ))}
+        </ul>
+        <a href={href('/who-we-care-for/overseas-families')} class="btn btn-primary mt-8">Arrange care from abroad<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
+      </div>
+      <ChatMock short />
+    </div>
+  </section>
+
+  <!-- 13 · FAQ preview -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader id="faq-title" eyebrow="FAQ" title="Questions families ask us">
+        <a href={href('/faq')} class="link mt-6 inline-block">See all questions →</a>
+      </SectionHeader>
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hero-sky .blob { position: absolute; border-radius: 999px; pointer-events: none; }
+  .hero-sky .b1 { width: 720px; height: 720px; right: -160px; top: -260px; background: radial-gradient(closest-side, rgb(231 169 60 / 0.28), transparent); }
+  .hero-sky .b2 { width: 640px; height: 640px; left: -240px; bottom: -320px; background: radial-gradient(closest-side, rgb(14 110 106 / 0.14), transparent); }
+  :global(html[data-motion="A"]) .hero-sky .blob { animation: drift 24s var(--ease-in-out) infinite alternate; }
+  :global(html[data-motion="A"]) .hero-sky .b2 { animation-delay: -12s; }
+  @keyframes drift { to { transform: translate(-4%, 4%); } }
+
+  .hero-arch { animation: arch-in 900ms var(--ease-out) 150ms both; }
+  @keyframes arch-in { from { transform: scale(1.04); } }
+  .hero-light { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(255 236 200 / 0.5), transparent 60%); animation: light-out 1200ms var(--ease-out) both; pointer-events: none; }
+  @keyframes light-out { to { opacity: 0.25; } }
+  :global(html[data-motion="C"]) .hero-arch, :global(html[data-motion="C"]) .hero-light { animation: none; }
+
+  .hero-chip { position: absolute; z-index: 2; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem 0.7rem 0.7rem; animation: chip-in 600ms var(--ease-out) both; }
+  .hero-chip:nth-of-type(2) { animation-delay: 500ms; }
+  .hero-chip:nth-of-type(3) { animation-delay: 620ms; }
+  .hero-chip:nth-of-type(4) { animation-delay: 740ms; }
+  @keyframes chip-in { from { opacity: 0; translate: 0 12px; } }
+  :global(html[data-motion="A"]) .hero-chip { animation: chip-in 600ms var(--ease-out) both, chip-float 6s ease-in-out var(--d) infinite; }
+  @keyframes chip-float { 50% { transform: translateY(-5px); } }
+  .chip-icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--color-primary); color: white; }
+  @media (max-width: 639px) { .hero-chip { scale: 0.88; } }
+</style>

@@ -1,0 +1,63 @@
+---
+// Reusable final CTA band (docs/01 §6.7) with the warm pointer glow (M35).
+import { site, href, waLink } from '../site';
+import Icon from './Icon.astro';
+
+interface Props {
+  title?: string;
+  text?: string;
+  variant?: 'default' | 'overseas' | 'partner';
+  bookLabel?: string;
+  bookHref?: string;
+  waMessage?: string;
+  waRef?: string;
+  waLabel?: string;
+}
+const {
+  title = "Let's talk about the care your loved one needs.",
+  text = "Our phone and WhatsApp line is open 24/7. Tell us what's needed and we'll take it from there.",
+  variant = 'default',
+  bookLabel = 'Book a home visit',
+  bookHref = href('/book-a-visit'),
+  waMessage,
+  waRef = 'WEB',
+  waLabel = 'WhatsApp us',
+} = Astro.props;
+const wa = waLink(waMessage, waRef);
+const phone = variant === 'overseas' ? site.phone.intl : site.phone.display;
+---
+
+<section class="cta-band relative isolate overflow-hidden bg-night text-white" data-glow>
+  <div class="cta-glow" aria-hidden="true"></div>
+  <div class="container-x relative py-20 text-center lg:py-24">
+    <h2 class="h2 mx-auto max-w-3xl !text-white" data-reveal>{title}</h2>
+    <p class="mx-auto mt-4 max-w-2xl text-lg text-white/80" data-reveal style="--i:1">{text}</p>
+    <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" data-reveal style="--i:2">
+      {variant === 'overseas' ? (
+        <>
+          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="cta_band"><Icon name="message-circle" size={20} />{waLabel}</a>
+          <a href={bookHref} class="btn btn-light">Request a call back</a>
+        </>
+      ) : (
+        <>
+          <a href={bookHref} class="btn btn-primary !bg-accent !text-ink hover:!bg-[#f0b955]">{bookLabel}<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
+          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="cta_band"><Icon name="message-circle" size={20} />{waLabel}</a>
+        </>
+      )}
+    </div>
+    <a href={site.phone.href} class="mt-6 inline-flex items-center gap-2 text-lg font-semibold text-white/90 hover:text-white" data-umami-event="call_click" data-umami-event-placement="cta_band">
+      <Icon name="phone" size={18} class="text-accent" />or call {phone}
+    </a>
+  </div>
+</section>
+
+<style>
+  .cta-band { background: radial-gradient(120% 120% at 50% 0%, #12395a 0%, var(--color-night) 60%); }
+  .cta-glow {
+    position: absolute; left: 50%; top: 40%; width: 760px; height: 420px; z-index: -1;
+    translate: calc(-50% + var(--gx, 0px)) calc(-50% + var(--gy, 0px));
+    background: radial-gradient(closest-side, rgb(231 169 60 / 0.32), rgb(14 110 106 / 0.18) 55%, transparent);
+    filter: blur(10px);
+    transition: translate 600ms var(--ease-out);
+  }
+</style>

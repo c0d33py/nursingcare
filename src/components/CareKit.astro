@@ -1,0 +1,128 @@
+---
+// M23 — 3D Care Kit. Everyone gets the illustrated poster + the HTML link list (the real interface).
+// Tier A desktops with WebGL2 lazy-load a procedural Three.js scene on top of the poster.
+import { getCollection } from 'astro:content';
+import { href } from '../site';
+import Icon from './Icon.astro';
+import IconTile from './IconTile.astro';
+
+const services = await getCollection('services');
+const kit = [
+  { slug: 'doctor-home-visit', icon: 'healthicons:stethoscope', obj: 'Stethoscope' },
+  { slug: 'nursing-care', icon: 'watch', obj: 'Nurse’s fob watch' },
+  { slug: 'injections-iv-therapy', icon: 'healthicons:syringe', obj: 'Capped syringe' },
+  { slug: 'bp-sugar-monitoring', icon: 'healthicons:blood-pressure-monitor', obj: 'BP monitor' },
+  { slug: 'ng-tube-feeding-care', icon: 'healthicons:nutrition', obj: 'Feeding syringe' },
+  { slug: 'urinary-catheter-care', icon: 'droplet', obj: 'Sterile pack' },
+  { slug: 'wound-dressing-care', icon: 'healthicons:bandaged', obj: 'Bandage roll' },
+].map((k, i, arr) => {
+  const s = services.find((x) => x.id === k.slug)!;
+  const a = Math.PI * (1 - (i + 0.5) / arr.length);
+  return { ...k, title: s.data.title, card: s.data.card, url: href(`/services/${k.slug}`), x: 50 + 41 * Math.cos(a), y: 54 - 44 * Math.sin(a) };
+});
+---
+
+<div class="care-kit grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]" data-care-kit data-items={JSON.stringify(kit.map((k) => ({ slug: k.slug, url: k.url })))}>
+  <div class="kit-stage relative mx-auto aspect-[5/4] w-full max-w-[640px]">
+    <div class="kit-poster absolute inset-0" aria-hidden="true">
+      <svg viewBox="0 0 500 400" class="absolute inset-0 h-full w-full">
+        <defs>
+          <linearGradient id="kit-bag" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#18918b"></stop><stop offset="1" stop-color="#0a4f4c"></stop>
+          </linearGradient>
+          <radialGradient id="kit-shadow"><stop offset="0" stop-color="#10243a" stop-opacity="0.22"></stop><stop offset="1" stop-color="#10243a" stop-opacity="0"></stop></radialGradient>
+        </defs>
+        <ellipse cx="250" cy="372" rx="190" ry="22" fill="url(#kit-shadow)"></ellipse>
+        <path d="M130 238 Q128 206 160 200 L340 200 Q372 206 370 238 Z" fill="#0a4f4c" transform="rotate(-6 250 220)"></path>
+        <rect x="100" y="228" width="300" height="140" rx="34" fill="url(#kit-bag)"></rect>
+        <rect x="112" y="228" width="276" height="16" rx="8" fill="#063b39" opacity="0.55"></rect>
+        <rect x="236" y="236" width="28" height="16" rx="5" fill="#e7a93c"></rect>
+        <circle cx="250" cy="305" r="30" fill="#fff"></circle>
+        <rect x="243" y="288" width="14" height="34" rx="3" fill="#0e6e6a"></rect>
+        <rect x="233" y="298" width="34" height="14" rx="3" fill="#0e6e6a"></rect>
+      </svg>
+      {kit.map((k, i) => (
+        <span class="kit-item" style={`left:${k.x}%;top:${k.y}%;--i:${i}`} data-kit-poster={k.slug}>
+          <IconTile icon={k.icon} size="md" />
+        </span>
+      ))}
+    </div>
+    <div class="kit-canvas absolute inset-0" data-kit-canvas aria-hidden="true"></div>
+    <p class="kit-hint pointer-events-none absolute inset-x-0 bottom-0 text-center text-sm text-muted">Hover an instrument · drag to turn the kit</p>
+  </div>
+
+  <div>
+    <ul class="space-y-2" aria-label="Clinical services in the kit">
+      {kit.map((k) => (
+        <li>
+          <a href={k.url} class="kit-link" data-kit-link={k.slug}>
+            <IconTile icon={k.icon} size="sm" />
+            <span class="flex-1">
+              <span class="block font-semibold text-ink">{k.title}</span>
+              <span class="block text-[0.95rem] leading-snug text-muted">{k.card}</span>
+            </span>
+            <Icon name="arrow-right" size={18} class="kit-arrow text-primary" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .kit-item {
+    position: absolute; translate: -50% -50%;
+    transition: scale 300ms var(--ease-out), opacity 300ms;
+    animation: kit-float 6s ease-in-out infinite; animation-delay: calc(var(--i) * -0.8s);
+  }
+  @keyframes kit-float { 50% { transform: translateY(-6px); } }
+  :global(html[data-motion="C"]) .kit-item { animation: none; }
+  .care-kit.has-hot .kit-item { opacity: 0.55; }
+  .care-kit .kit-item.is-hot { opacity: 1; scale: 1.15; }
+  .kit-canvas { opacity: 0; transition: opacity 400ms; }
+  .kit-poster { transition: opacity 400ms; }
+  .care-kit.is-3d .kit-canvas { opacity: 1; }
+  .care-kit.is-3d .kit-poster { opacity: 0; }
+  .kit-hint { display: none; }
+  .care-kit.is-3d .kit-hint { display: block; }
+  .kit-link {
+    display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; border-radius: 18px;
+    border: 1px solid transparent; transition: background-color 200ms, border-color 200ms;
+  }
+  .kit-link:hover, .kit-link:focus-visible, .kit-link.is-hot { background: white; border-color: var(--color-line); box-shadow: var(--shadow-soft); }
+  .kit-arrow { transition: transform 200ms var(--ease-out); }
+  .kit-link:hover .kit-arrow, .kit-link.is-hot .kit-arrow { transform: translateX(4px); }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-care-kit]');
+  if (root) {
+    const links = [...root.querySelectorAll<HTMLElement>('[data-kit-link]')];
+    const posters = [...root.querySelectorAll<HTMLElement>('[data-kit-poster]')];
+    const highlight = (slug: string | null, from3d = false) => {
+      root.classList.toggle('has-hot', !!slug);
+      links.forEach((l) => l.classList.toggle('is-hot', l.dataset.kitLink === slug));
+      posters.forEach((p) => p.classList.toggle('is-hot', p.dataset.kitPoster === slug));
+      if (!from3d) root.dispatchEvent(new CustomEvent('kit:highlight', { detail: slug }));
+    };
+    for (const l of links) {
+      const slug = l.dataset.kitLink!;
+      l.addEventListener('pointerenter', () => highlight(slug));
+      l.addEventListener('focus', () => highlight(slug));
+      l.addEventListener('pointerleave', () => highlight(null));
+      l.addEventListener('blur', () => highlight(null));
+    }
+    root.addEventListener('kit:hover3d', (e) => highlight((e as CustomEvent<string | null>).detail, true));
+
+    const webgl2 = () => { try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; } };
+    if (document.documentElement.dataset.motion === 'A' && webgl2()) {
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        const load = () => import('../scripts/care-kit').then((m) => m.mountCareKit(root)).catch(() => { /* keep the poster */ });
+        'requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 1500 }) : setTimeout(load, 300);
+      }, { rootMargin: '100% 0px' });
+      io.observe(root);
+    }
+  }
+</script>

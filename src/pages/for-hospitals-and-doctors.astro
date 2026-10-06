@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, href, waLink } from '../site';
+import { photos } from '../data/photos';
+import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/Icon.astro';
+
+const wa = waLink("I'm a healthcare professional and would like to refer a patient.", 'WEB-PARTNER');
+const take = [
+  { icon: 'healthicons:bandaged', t: 'Wound & pressure-sore care', slug: 'wound-dressing-care' },
+  { icon: 'healthicons:nutrition', t: 'NG tube insertion & feeding', slug: 'ng-tube-feeding-care' },
+  { icon: 'healthicons:bladder', t: 'Urinary catheter care', slug: 'urinary-catheter-care' },
+  { icon: 'healthicons:intravenous-drip', t: 'IV medication & fluids', slug: 'injections-iv-therapy' },
+  { icon: 'healthicons:blood-pressure-monitor', t: 'Vital signs monitoring', slug: 'bp-sugar-monitoring' },
+  { icon: 'healthicons:hospitalized', t: 'Post-operative nursing', slug: 'post-surgery-care' },
+  { icon: 'healthicons:elderly', t: 'Elderly & dependent care', slug: 'elderly-patient-care' },
+  { icon: 'healthicons:mobile-clinic', t: 'Paramedical support', slug: 'paramedical-support' },
+];
+const steps = [
+  { t: 'Contact us', d: 'Call or WhatsApp with the patient’s needs and discharge date.' },
+  { t: 'Share the orders', d: 'Send the discharge summary, prescriptions and care instructions.' },
+  { t: 'We confirm staffing', d: 'Usually within hours, with the name of the nurse or carer assigned.' },
+  { t: 'Care starts & we report back', d: 'A summary to the referring doctor after the first week, or sooner if anything changes.' },
+];
+const fieldCls = 'input';
+---
+
+<Base title="Refer Patients for Home Care in Lahore | Heaven Nursing Care" description="Partner with us for safe discharge home: nursing, wound, NG tube and catheter care, IV therapy and monitoring for your patients in Lahore.">
+  <PageHero
+    eyebrow="For hospitals & doctors"
+    title="A safe next step home for your patients"
+    subtitle="Refer patients for nursing, wound care, NG tube and catheter care, IV therapy and monitoring at home across Lahore."
+    crumbs={[{ label: 'For hospitals & doctors' }]}
+    image={photos.nurseBed}
+    imageAlt="A nurse checking on a patient in bed"
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href={wa} class="btn btn-primary" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="partner">Refer a patient</a>
+      <a href="#partner-form" class="btn btn-outline">Partner enquiry</a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="take-title">
+    <div class="container-x">
+      <SectionHeader id="take-title" eyebrow="Scope" title="What we can take on at home" />
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {take.map((t, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a href={href(`/services/${t.slug}`)} class="flex items-center gap-4 rounded-2xl border border-line p-4 hover:border-primary">
+              <span class="icon-tile" style="width:44px;height:44px"><Icon name={t.icon} size={24} /></span>
+              <span class="font-semibold text-ink">{t.t}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="ref-title">
+    <div class="container-x">
+      <SectionHeader id="ref-title" eyebrow="Referral process" title="Four steps from ward to home" />
+      <ol class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {steps.map((s, i) => (
+          <li class="card p-6" data-reveal style={`--i:${i}`}>
+            <span class="font-display text-4xl font-medium text-primary">0{i + 1}</span>
+            <h3 class="h3 mt-3">{s.t}</h3>
+            <p class="mt-2 text-muted">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="mt-10 text-muted">Our clinical standards: <a href={href('/about/quality-and-safety')} class="link">Quality & safety →</a></p>
+    </div>
+  </section>
+
+  <section id="partner-form" class="section scroll-mt-24" aria-labelledby="form-title">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <div>
+        <SectionHeader id="form-title" eyebrow="Partner with us" title="Become a referral partner" text="Tell us about your hospital, clinic or practice. We'll arrange a short call to agree how referrals and reporting work best for you." />
+        <ul class="mt-8 space-y-3" data-reveal style="--i:3">
+          <li class="flex items-center gap-3"><Icon name="phone" size={20} class="text-primary" /><a href={site.phone.href} class="font-semibold text-ink">{site.phone.display}</a> (24/7)</li>
+          <li class="flex items-center gap-3"><Icon name="map-pin" size={20} class="text-primary" />{site.address.full}</li>
+        </ul>
+      </div>
+
+      <form class="card space-y-5 p-6 sm:p-8" data-wa-form data-ref="WEB-PARTNER" data-intro="Partner enquiry from the website:" data-thanks={href('/book-a-visit/thank-you?form=partner')}>
+        <div data-error-summary hidden tabindex="-1" role="alert" class="rounded-2xl border border-danger/30 bg-danger/5 p-4 text-danger"></div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div data-field="name" data-label="Name" data-required data-msg="Please enter your name.">
+            <label for="p-name" class="field-label">Your name</label>
+            <input id="p-name" name="name" class={fieldCls} autocomplete="name" />
+            <p class="field-error" data-error hidden></p>
+          </div>
+          <div data-field="role" data-label="Role" data-required data-msg="Please enter your role.">
+            <label for="p-role" class="field-label">Role</label>
+            <input id="p-role" name="role" class={fieldCls} placeholder="e.g. Consultant surgeon" autocomplete="organization-title" />
+            <p class="field-error" data-error hidden></p>
+          </div>
+        </div>
+        <div data-field="org" data-label="Organisation" data-required data-msg="Please enter your hospital, clinic or practice.">
+          <label for="p-org" class="field-label">Hospital, clinic or practice</label>
+          <input id="p-org" name="org" class={fieldCls} autocomplete="organization" />
+          <p class="field-error" data-error hidden></p>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div data-field="phone" data-type="phone" data-label="Phone" data-required data-msg="Please enter a phone number we can reach you on.">
+            <label for="p-phone" class="field-label">Phone</label>
+            <input id="p-phone" name="phone" type="tel" class={fieldCls} autocomplete="tel" inputmode="tel" />
+            <p class="field-error" data-error hidden></p>
+          </div>
+          <div data-field="email" data-label="Email">
+            <label for="p-email" class="field-label">Email <span class="font-normal text-muted">(optional)</span></label>
+            <input id="p-email" name="email" type="email" class={fieldCls} autocomplete="email" />
+            <p class="field-error" data-error hidden></p>
+          </div>
+        </div>
+        <div data-field="message" data-label="Message">
+          <label for="p-msg" class="field-label">How can we help? <span class="font-normal text-muted">(optional)</span></label>
+          <textarea id="p-msg" name="message" class={fieldCls} maxlength="500"></textarea>
+          <p class="field-hint">Please don't include identifiable patient details here.</p>
+        </div>
+        <div data-field="consent" data-skip data-required data-msg="Please confirm we can contact you.">
+          <label class="flex items-start gap-3 text-[0.98rem]">
+            <input type="checkbox" name="consent" class="mt-1 size-5 accent-[var(--color-primary)]" />
+            <span>I agree to Heaven Nursing Care 24/7 contacting me about this enquiry, as described in the <a href={href('/legal/privacy-policy')} class="link">Privacy Policy</a>.</span>
+          </label>
+          <p class="field-error" data-error hidden></p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send enquiry on WhatsApp</button>
+        <p class="text-center text-sm text-muted">Opens WhatsApp with your enquiry ready to send.</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/wa-form.ts';
+</script>

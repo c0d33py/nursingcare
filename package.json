@@ -1,0 +1,36 @@
+{
+  "name": "heaven-nursing-care",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing website for Heaven Nursing Care 24/7 — home nursing & healthcare in Lahore",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^6.0.6",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@iconify-json/healthicons": "^1.2.13",
+    "@iconify-json/lucide": "^1.2.140",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.6",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26",
+    "preact": "^10.29.8",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/three": "^0.186.0",
+    "typescript": "^6.0.3"
+  }
+}

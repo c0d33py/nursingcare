@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+interface Props { tone?: 'light' | 'dark' | 'callout'; class?: string }
+const { tone = 'light', class: className = '' } = Astro.props;
+---
+
+{tone === 'callout' ? (
+  <div class:list={['flex items-start gap-3 rounded-2xl border border-accent/40 bg-accent-soft/60 p-4 text-[0.98rem] text-ink', className]} role="note">
+    <Icon name="triangle-alert" size={22} class="mt-0.5 shrink-0 text-[#a86a06]" />
+    <p><strong>Not an emergency service.</strong> In a medical emergency, call <a href="tel:1122" class="font-semibold underline">Rescue 1122</a> or go to the nearest hospital emergency department.</p>
+  </div>
+) : (
+  <p class:list={['flex items-start gap-2 text-[0.95rem]', tone === 'dark' ? 'text-white/75' : 'text-muted', className]}>
+    <Icon name="triangle-alert" size={18} class={`mt-1 shrink-0 ${tone === 'dark' ? 'text-accent' : 'text-[#a86a06]'}`} />
+    <span>Heaven Nursing Care 24/7 is not an emergency service. In a medical emergency, call <a href="tel:1122" class="font-semibold underline">Rescue 1122</a> or go to the nearest hospital emergency department.</span>
+  </p>
+)}

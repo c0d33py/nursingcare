@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, href, waLink } from '../site';
+import Icon from '../components/Icon.astro';
+---
+
+<Base title="Page Not Found | Heaven Nursing Care" description="This page has moved, but we're still here." noindex>
+  <section class="section bg-cream">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow mb-4">Error 404</p>
+        <h1 class="h1">This page has moved — but we're still here</h1>
+        <p class="lead mt-5">Let's get you to the right place.</p>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          <li><a href={href('/services')} class="btn btn-outline btn-block">Our services</a></li>
+          <li><a href={href('/book-a-visit')} class="btn btn-primary btn-block">Book a home visit</a></li>
+          <li><a href={href('/contact')} class="btn btn-outline btn-block">Contact us</a></li>
+          <li><a href={waLink()} class="btn btn-wa btn-block" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp us</a></li>
+        </ul>
+        <p class="mt-6 text-muted">Or call <a href={site.phone.href} class="link">{site.phone.display}</a>, any time.</p>
+      </div>
+      <svg viewBox="0 0 320 360" class="mx-auto w-full max-w-sm text-primary" aria-hidden="true">
+        <path d="M40 340 V150 C40 80 95 30 160 30 S280 80 280 150 V340" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"></path>
+        <path d="M80 340 V160 C80 110 115 75 160 75 S240 110 240 160 V340 Z" fill="var(--color-accent-soft)"></path>
+        <path d="M160 340 V75 C200 80 225 110 228 160 L228 330 Z" fill="var(--color-accent)" opacity="0.55"></path>
+        <circle cx="205" cy="220" r="7" fill="var(--color-ink)"></circle>
+        <path d="M20 340 H300" stroke="currentColor" stroke-width="6" stroke-linecap="round"></path>
+      </svg>
+    </div>
+  </section>
+</Base>

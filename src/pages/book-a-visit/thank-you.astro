@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site, href, waLink } from '../../site';
+import Icon from '../../components/Icon.astro';
+import EmergencyNotice from '../../components/EmergencyNotice.astro';
+---
+
+<Base title="Thank You | Heaven Nursing Care" description="We've received your request." noindex>
+  <section class="section bg-sky">
+    <div class="container-x max-w-3xl text-center">
+      <svg class="success mx-auto" viewBox="0 0 96 96" width="96" height="96" aria-hidden="true">
+        <circle cx="48" cy="48" r="44" fill="none" stroke="var(--color-primary)" stroke-width="4" pathLength="1"></circle>
+        <path d="M48 70s-17-10.4-17-22.6c0-5.6 4.4-10 9.6-10 3.1 0 5.8 1.5 7.4 3.8 1.6-2.3 4.3-3.8 7.4-3.8 5.2 0 9.6 4.4 9.6 10C65 59.6 48 70 48 70z" fill="none" stroke="var(--color-accent)" stroke-width="4" stroke-linejoin="round" pathLength="1"></path>
+      </svg>
+      <h1 class="h1 mt-8">Thank you — your request is ready</h1>
+      <p class="lead mx-auto mt-5 max-w-2xl" data-thanks-text>
+        WhatsApp has opened with your details filled in. <strong class="text-ink">Just press send</strong>, and a member of our team will reply {site.responseTime}.
+      </p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener" data-wa-again><Icon name="message-circle" size={20} />Open WhatsApp again</a>
+        <a href={site.phone.href} class="btn btn-outline"><Icon name="phone" size={18} />Call {site.phone.display}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x grid max-w-5xl gap-10 md:grid-cols-2">
+      <div class="rounded-[var(--radius-card)] bg-cream p-7">
+        <h2 class="h3">While you wait</h2>
+        <p class="mt-2 text-muted">Having these to hand makes the call quicker:</p>
+        <ul class="mt-4 space-y-2.5">
+          {['Current prescriptions and medicines', 'Any discharge summary or recent reports', "The patient's daily routine"].map((t) => (
+            <li class="flex items-start gap-2.5"><Icon name="check" size={20} class="mt-0.5 shrink-0 text-primary" />{t}</li>
+          ))}
+        </ul>
+        <a href={href('/how-it-works#what-to-have-ready')} class="link mt-5 inline-block">How it works →</a>
+      </div>
+      <div class="space-y-5">
+        <EmergencyNotice tone="callout" />
+        <p class="font-display text-2xl text-ink">{site.signOff}</p>
+        <a href={href('/')} class="btn btn-outline">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .success circle, .success path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+  :global(html.js:not([data-motion="C"])) .success circle { animation: draw 500ms var(--ease-out) both; }
+  :global(html.js:not([data-motion="C"])) .success path { animation: draw 600ms var(--ease-out) 400ms both; }
+  @keyframes draw { from { stroke-dashoffset: 1; } }
+</style>
+
+<script>
+  // Re-open the exact message the form prepared (kept in sessionStorage by wa-form.ts).
+  try {
+    const url = sessionStorage.getItem('wa-last');
+    const a = document.querySelector<HTMLAnchorElement>('[data-wa-again]');
+    if (url && a) a.href = url;
+  } catch { /* storage blocked — the generic WhatsApp link still works */ }
+</script>

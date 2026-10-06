@@ -1,0 +1,22 @@
+---
+// Pseudo-3D "clay" icon tile — stands in for the pre-rendered 3D service icons (docs/03 M24).
+import Icon from './Icon.astro';
+
+interface Props {
+  icon: string; // "healthicons:…" or a lucide name
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  gold?: boolean;
+  transitionName?: string;
+  class?: string;
+}
+const { icon, size = 'md', gold = false, transitionName, class: className = '' } = Astro.props;
+const dims = { sm: [44, 24], md: [64, 34], lg: [88, 46], xl: [148, 80] }[size];
+---
+
+<span
+  class:list={['icon-tile', { gold }, className]}
+  style={`width:${dims[0]}px;height:${dims[0]}px;${transitionName ? `view-transition-name:${transitionName};` : ''}`}
+  aria-hidden="true"
+>
+  <Icon name={icon} size={dims[1]} />
+</span>

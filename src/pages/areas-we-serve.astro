@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, href, waLink } from '../site';
+import { areas } from '../data/content';
+import PageHero from '../components/PageHero.astro';
+import LahoreMap from '../components/LahoreMap.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<Base title="Areas We Serve in Lahore | Heaven Nursing Care" description="Home nursing and healthcare across Lahore: DHA, Gulberg, Johar Town, Model Town, Bahria Town, Cantt and more. Check your area.">
+  <PageHero
+    eyebrow="Areas we serve"
+    title="Home nursing across Lahore"
+    subtitle={`Our team visits homes throughout Lahore from our base at ${site.address.full}. Check your area below.`}
+    crumbs={[{ label: 'About', href: href('/about') }, { label: 'Areas we serve' }]}
+  />
+
+  <section class="section" aria-label="Coverage map and list">
+    <div class="container-x"><LahoreMap /></div>
+  </section>
+
+  <section class="section-tight bg-cream" aria-labelledby="near-title">
+    <div class="container-x grid gap-6 md:grid-cols-3">
+      <h2 id="near-title" class="sr-only">Good to know</h2>
+      <div class="rounded-[var(--radius-card)] bg-white p-6">
+        <Icon name="clock" size={28} class="text-primary" />
+        <p class="mt-3 font-semibold text-ink">Same-day visits</p>
+        <p class="mt-1 text-muted">Single visits can often be arranged the same day across all {areas.length} areas.</p>
+      </div>
+      <div class="rounded-[var(--radius-card)] bg-white p-6">
+        <Icon name="moon" size={28} class="text-primary" />
+        <p class="mt-3 font-semibold text-ink">Night & 24-hour care</p>
+        <p class="mt-1 text-muted">Shift-based care is available everywhere we serve, day or night.</p>
+      </div>
+      <div class="rounded-[var(--radius-card)] bg-white p-6">
+        <Icon name="map-pin" size={28} class="text-primary" />
+        <p class="mt-3 font-semibold text-ink">Not on the list?</p>
+        <p class="mt-1 text-muted">We may still cover you. <a href={waLink('Do you cover my area in Lahore?', 'WEB-AREA')} class="link" target="_blank" rel="noopener">Ask on WhatsApp</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

@@ -1,0 +1,35 @@
+---
+import { href } from '../site';
+import Icon from './Icon.astro';
+
+interface Props { items: { label: string; href?: string }[] }
+const trail = [{ label: 'Home', href: href('/') }, ...Astro.props.items];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: trail.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: t.label,
+    ...(t.href ? { item: new URL(t.href, Astro.site).href } : {}),
+  })),
+};
+const parent = trail.at(-2);
+---
+
+<nav aria-label="Breadcrumb" class="text-[0.95rem] text-muted">
+  <ol class="hidden flex-wrap items-center gap-1.5 sm:flex">
+    {trail.map((t, i) => (
+      <li class="flex items-center gap-1.5">
+        {i > 0 && <Icon name="chevron-right" size={14} class="text-muted/60" />}
+        {t.href && i < trail.length - 1 ? <a href={t.href} class="hover:text-primary hover:underline">{t.label}</a> : <span aria-current="page" class="font-medium text-ink">{t.label}</span>}
+      </li>
+    ))}
+  </ol>
+  {parent?.href && (
+    <a href={parent.href} class="inline-flex items-center gap-1 font-medium hover:text-primary sm:hidden">
+      <Icon name="chevron-left" size={16} />{parent.label}
+    </a>
+  )}
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

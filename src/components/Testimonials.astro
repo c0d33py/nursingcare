@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../site';
+import Icon from './Icon.astro';
+
+interface Props { overseas?: boolean; service?: string; limit?: number }
+const { overseas, service, limit = 6 } = Astro.props;
+let items = await getCollection('testimonials');
+if (overseas) items = items.filter((t) => t.data.overseas);
+if (service) items = items.filter((t) => t.data.service === service);
+items = items.slice(0, limit);
+const hasSamples = items.some((t) => t.data.sample);
+---
+
+{items.length > 0 && (
+  <div data-scroller>
+    <ul class="testi-track -mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4" data-track tabindex="0" aria-label="Testimonials">
+      {items.map((t, i) => (
+        <li class="w-[85%] shrink-0 snap-start sm:w-[420px]" data-reveal style={`--i:${i}`}>
+          <figure class="card flex h-full flex-col p-7">
+            <div class="flex items-center justify-between">
+              <Icon name="quote" size={32} class="text-accent" />
+              {t.data.sample && <span class="rounded-full bg-sky px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-muted">Sample</span>}
+            </div>
+            <blockquote class="mt-4 flex-1 text-[1.05rem] leading-relaxed text-ink">“{t.data.quote}”</blockquote>
+            <figcaption class="mt-6 border-t border-line pt-4">
+              <span class="block font-semibold text-ink">{t.data.name}</span>
+              <span class="text-[0.95rem] text-muted">{t.data.relation} · {t.data.area}</span>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+      <a href={site.mapsUrl} class="link" target="_blank" rel="noopener">Read our reviews on Google →</a>
+      <div class="flex gap-2">
+        <button type="button" class="scroll-btn" data-prev aria-label="Previous testimonials"><Icon name="chevron-left" size={22} /></button>
+        <button type="button" class="scroll-btn" data-next aria-label="Next testimonials"><Icon name="chevron-right" size={22} /></button>
+      </div>
+    </div>
+    {hasSamples && <p class="mt-3 text-sm text-muted">Testimonials marked “Sample” illustrate the layout and will be replaced with real, consented reviews.</p>}
+  </div>
+)}
+
+<style>
+  .testi-track { scrollbar-width: none; }
+  .testi-track::-webkit-scrollbar { display: none; }
+  .scroll-btn {
+    display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px;
+    border: 2px solid var(--color-line); background: white; color: var(--color-ink);
+    transition: border-color 200ms, opacity 200ms;
+  }
+  .scroll-btn:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
+  .scroll-btn:disabled { opacity: 0.35; cursor: default; }
+</style>

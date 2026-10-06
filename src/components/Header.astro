@@ -1,0 +1,310 @@
+---
+import { getCollection } from 'astro:content';
+import { site, href, waLink } from '../site';
+import { categories, situations } from '../data/content';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import IconTile from './IconTile.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const groups = Object.entries(categories).map(([key, label]) => ({
+  label,
+  items: services.filter((s) => s.data.category === key),
+}));
+
+const whoLinks = [
+  ...situations
+    .filter((s) => s.id !== 'families-abroad')
+    .map((s) => ({ label: s.title, href: href(`/who-we-care-for#${s.id}`) })),
+  { label: 'Families living abroad', href: href('/who-we-care-for/overseas-families') },
+  { label: 'For hospitals & doctors', href: href('/for-hospitals-and-doctors') },
+];
+const aboutLinks = [
+  { label: 'About us', href: href('/about') },
+  { label: 'Our care team', href: href('/about/care-team') },
+  { label: 'Quality & safety', href: href('/about/quality-and-safety') },
+  { label: 'How it works', href: href('/how-it-works') },
+  { label: 'Areas we serve', href: href('/areas-we-serve') },
+  { label: 'FAQ', href: href('/faq') },
+];
+
+const path = Astro.url.pathname;
+const current = (h: string) => (path === h ? 'page' : undefined);
+const inGroup = (prefixes: string[]) => prefixes.some((p) => path.startsWith(href(p)));
+const hideBook = path.startsWith(href('/book-a-visit'));
+---
+
+<div id="top-sentinel" class="pointer-events-none absolute top-0 left-0 h-2 w-px" aria-hidden="true"></div>
+
+<header class="site-header sticky top-0 z-50" data-header>
+  <div class="container-x flex h-[var(--header-h)] items-center gap-4 lg:gap-6">
+    <a href={href('/')} class="shrink-0 rounded-lg" aria-label={`${site.name} — home`}>
+      <Logo class="header-logo" />
+    </a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center">
+        <li class="nav-item" data-menu>
+          <button type="button" class="nav-link" aria-expanded="false" aria-controls="menu-services" data-menu-trigger data-active={inGroup(['/services']) || undefined}>
+            Services <Icon name="chevron-down" size={16} class="nav-chevron" />
+          </button>
+          <div id="menu-services" class="menu-panel menu-mega" data-menu-panel>
+            <div class="container-x">
+              <div class="grid grid-cols-[1fr_1fr_1fr_280px] gap-8 rounded-[28px] border border-line bg-white p-8 shadow-[var(--shadow-lift)]">
+                {groups.map((g) => (
+                  <div>
+                    <p class="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-muted">{g.label}</p>
+                    <ul class="space-y-1">
+                      {g.items.map((s) => (
+                        <li>
+                          <a href={href(`/services/${s.id}`)} class="mega-link" aria-current={current(href(`/services/${s.id}`))}>
+                            <IconTile icon={`healthicons:${s.data.icon}`} size="sm" />
+                            <span>
+                              <span class="block font-semibold text-ink">{s.data.title}</span>
+                              <span class="block text-[0.9rem] leading-snug text-muted">{s.data.card}</span>
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <div class="flex flex-col gap-3 rounded-2xl bg-cream p-5">
+                  <p class="font-display text-xl font-medium text-ink">Not sure what you need?</p>
+                  <p class="text-[0.95rem] text-muted">Answer three quick questions and we'll suggest the right care.</p>
+                  <a href={href('/#care-finder')} class="btn btn-primary btn-sm">Find the right care</a>
+                  <hr class="my-2 border-line" />
+                  <a href={href('/care-plans')} class="link text-[0.95rem]">Care plans: visit, day, night or 24-hour</a>
+                  <a href={href('/services')} class="link text-[0.95rem]">All services</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a href={href('/care-plans')} class="nav-link" aria-current={current(href('/care-plans'))}>Care Plans</a></li>
+        <li class="nav-item relative" data-menu>
+          <button type="button" class="nav-link" aria-expanded="false" aria-controls="menu-who" data-menu-trigger data-active={inGroup(['/who-we-care-for', '/for-hospitals-and-doctors']) || undefined}>
+            Who We Care For <Icon name="chevron-down" size={16} class="nav-chevron" />
+          </button>
+          <div id="menu-who" class="menu-panel menu-drop" data-menu-panel>
+            <ul class="drop-list">
+              {whoLinks.map((l) => <li><a href={l.href} class="drop-link">{l.label}</a></li>)}
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item relative" data-menu>
+          <button type="button" class="nav-link" aria-expanded="false" aria-controls="menu-about" data-menu-trigger data-active={inGroup(['/about', '/how-it-works', '/areas-we-serve', '/faq']) || undefined}>
+            About <Icon name="chevron-down" size={16} class="nav-chevron" />
+          </button>
+          <div id="menu-about" class="menu-panel menu-drop" data-menu-panel>
+            <ul class="drop-list">
+              {aboutLinks.map((l) => <li><a href={l.href} class="drop-link" aria-current={current(l.href)}>{l.label}</a></li>)}
+            </ul>
+          </div>
+        </li>
+        <li><a href={href('/contact')} class="nav-link" aria-current={current(href('/contact'))}>Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      <div class="hidden items-center gap-1 2xl:flex">
+        <a href={site.phone.href} class="flex items-center gap-2 rounded-full px-3 py-2 font-semibold text-ink hover:text-primary" data-umami-event="call_click" data-umami-event-placement="header">
+          <Icon name="phone" size={18} class="text-primary" />{site.phone.display}
+        </a>
+        <button type="button" class="copy-btn" data-copy={site.phone.display} aria-label="Copy phone number">
+          <Icon name="copy" size={16} />
+          <span class="copy-tip" role="status" aria-live="polite"></span>
+        </button>
+      </div>
+      <a href={waLink()} class="btn btn-outline btn-sm hidden lg:inline-flex" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="header">
+        <Icon name="message-circle" size={18} /><span class="sr-only 2xl:not-sr-only">WhatsApp</span>
+      </a>
+      {!hideBook && <a href={href('/book-a-visit')} class="btn btn-primary btn-sm hidden lg:inline-flex">Book a home visit</a>}
+
+      <a href={site.phone.href} class="grid size-12 place-items-center rounded-full text-primary lg:hidden" aria-label={`Call ${site.phone.display}`} data-umami-event="call_click" data-umami-event-placement="header">
+        <Icon name="phone" size={22} />
+      </a>
+      <button type="button" class="grid size-12 place-items-center rounded-full bg-sky text-ink lg:hidden" aria-label="Open menu" data-mobile-open>
+        <Icon name="menu" size={24} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog class="mobile-menu" aria-label="Menu" data-mobile-menu>
+  <div class="flex h-full flex-col">
+    <div class="flex items-center justify-between border-b border-line px-4 py-3">
+      <Logo />
+      <button type="button" class="grid size-12 place-items-center rounded-full bg-sky" aria-label="Close menu" data-mobile-close>
+        <Icon name="x" size={22} />
+      </button>
+    </div>
+    <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-4 py-4">
+      <details class="m-group" open={inGroup(['/services']) || undefined}>
+        <summary>Services <Icon name="chevron-down" size={20} /></summary>
+        <ul>
+          <li><a href={href('/services')}>All services</a></li>
+          {services.map((s) => <li><a href={href(`/services/${s.id}`)}>{s.data.title}</a></li>)}
+        </ul>
+      </details>
+      <a class="m-link" href={href('/care-plans')}>Care Plans</a>
+      <details class="m-group">
+        <summary>Who We Care For <Icon name="chevron-down" size={20} /></summary>
+        <ul>
+          <li><a href={href('/who-we-care-for')}>Overview</a></li>
+          {whoLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </details>
+      <details class="m-group">
+        <summary>About <Icon name="chevron-down" size={20} /></summary>
+        <ul>{aboutLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </details>
+      <a class="m-link" href={href('/contact')}>Contact</a>
+    </nav>
+    <div class="space-y-3 border-t border-line bg-cream px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+      <a href={href('/book-a-visit')} class="btn btn-primary btn-block">Book a home visit</a>
+      <div class="grid grid-cols-2 gap-3">
+        <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp</a>
+        <a href={site.phone.href} class="btn btn-outline"><Icon name="phone" size={20} />Call</a>
+      </div>
+      <p class="text-center text-sm text-muted">{site.address.full} · Available 24/7</p>
+    </div>
+  </div>
+</dialog>
+
+<style is:global>
+  .site-header {
+    view-transition-name: site-header;
+    background: rgb(255 255 255 / 0.86);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur-3), box-shadow var(--dur-3);
+  }
+  .site-header > div { transition: height 240ms var(--ease-out); }
+  .site-header .header-logo { transform-origin: left center; transition: transform 240ms var(--ease-out); }
+  .site-header[data-scrolled] { border-color: var(--color-line); box-shadow: 0 6px 24px rgb(16 36 58 / 0.06); }
+  @media (min-width: 1024px) {
+    .site-header[data-scrolled] > div { height: 64px; }
+    .site-header[data-scrolled] .header-logo { transform: scale(0.9); }
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap;
+    min-height: 44px; padding: 0 0.8rem;
+    font-weight: 600; font-size: 1rem; color: var(--color-ink);
+    border-radius: 999px; cursor: pointer;
+  }
+  .nav-link::after {
+    content: ""; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 6px; height: 2px;
+    background: var(--color-accent); transform: scaleX(0); transform-origin: left;
+    transition: transform 240ms var(--ease-out);
+  }
+  .nav-link:hover::after, .nav-link[aria-current="page"]::after, .nav-link[data-active]::after,
+  [data-open] > .nav-link::after { transform: scaleX(1); }
+  .nav-chevron { transition: transform 200ms var(--ease-out); }
+  [data-open] > .nav-link .nav-chevron { transform: rotate(180deg); }
+
+  .menu-panel {
+    position: absolute; top: 100%; z-index: 60;
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity 160ms var(--ease-in), transform 160ms var(--ease-in), visibility 0s linear 160ms;
+  }
+  .menu-mega { left: 0; right: 0; padding-top: 4px; }
+  .menu-drop { left: 0; min-width: 270px; padding-top: 8px; }
+  [data-open] > .menu-panel,
+  html:not(.js) .nav-item:hover > .menu-panel,
+  html:not(.js) .nav-item:focus-within > .menu-panel {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s;
+  }
+  .mega-link { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.6rem; border-radius: 16px; transition: background-color 160ms; }
+  .mega-link:hover, .mega-link[aria-current="page"] { background: var(--color-sky); }
+  .drop-list { background: white; border: 1px solid var(--color-line); border-radius: 20px; padding: 0.5rem; box-shadow: var(--shadow-lift); }
+  .drop-link { display: block; padding: 0.65rem 0.9rem; border-radius: 12px; font-weight: 500; color: var(--color-ink); }
+  .drop-link:hover, .drop-link[aria-current="page"] { background: var(--color-sky); color: var(--color-primary-strong); }
+
+  .copy-btn { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; color: var(--color-muted); }
+  .copy-btn:hover { background: var(--color-sky); color: var(--color-primary); }
+  .copy-tip {
+    position: absolute; top: calc(100% + 6px); left: 50%; translate: -50% 4px; white-space: nowrap;
+    background: var(--color-ink); color: white; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.6rem; border-radius: 8px;
+    opacity: 0; pointer-events: none; transition: opacity 200ms, translate 200ms var(--ease-out);
+  }
+  .copy-tip:not(:empty) { opacity: 1; translate: -50% 0; }
+
+  dialog.mobile-menu {
+    margin: 0 0 0 auto; padding: 0; border: 0; width: min(100%, 420px); max-width: 100%;
+    height: 100dvh; max-height: 100dvh; background: white; color: var(--color-text);
+  }
+  dialog.mobile-menu::backdrop { background: rgb(11 27 43 / 0.45); }
+  dialog.mobile-menu[open] { animation: sheet-in 320ms var(--ease-out); }
+  @keyframes sheet-in { from { transform: translateX(100%); } }
+  .m-group, .m-link { border-bottom: 1px solid var(--color-line); }
+  .m-group summary, .m-link {
+    display: flex; align-items: center; justify-content: space-between; min-height: 56px;
+    font-size: 1.15rem; font-weight: 600; color: var(--color-ink); cursor: pointer; list-style: none;
+  }
+  .m-group summary::-webkit-details-marker { display: none; }
+  .m-group summary svg { transition: transform 200ms; }
+  .m-group[open] summary svg { transform: rotate(180deg); }
+  .m-group ul { padding: 0 0 0.75rem 0.25rem; }
+  .m-group li a { display: block; padding: 0.6rem 0.5rem; border-radius: 10px; color: var(--color-text); }
+  .m-group li a:hover { background: var(--color-sky); }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const sentinel = document.getElementById('top-sentinel');
+  if (sentinel) {
+    new IntersectionObserver(([e]) => header.toggleAttribute('data-scrolled', !e.isIntersecting)).observe(sentinel);
+  }
+
+  // Desktop menus (M05): click, hover-intent, Esc, outside click.
+  const items = [...document.querySelectorAll<HTMLElement>('[data-menu]')];
+  const setOpen = (item: HTMLElement, open: boolean) => {
+    item.toggleAttribute('data-open', open);
+    item.querySelector('[data-menu-trigger]')?.setAttribute('aria-expanded', String(open));
+  };
+  const closeAll = (except?: HTMLElement) => items.forEach((i) => i !== except && setOpen(i, false));
+  const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  for (const item of items) {
+    const trigger = item.querySelector<HTMLButtonElement>('[data-menu-trigger]')!;
+    let timer = 0;
+    let byHover = false;
+    trigger.addEventListener('click', () => {
+      const open = item.hasAttribute('data-open');
+      if (open && byHover) { byHover = false; return; } // hover already opened it: keep it open
+      closeAll(item);
+      setOpen(item, !open);
+    });
+    if (canHover) {
+      item.addEventListener('pointerenter', () => {
+        clearTimeout(timer);
+        timer = window.setTimeout(() => { if (!item.hasAttribute('data-open')) { byHover = true; closeAll(item); setOpen(item, true); } }, 120);
+      });
+      item.addEventListener('pointerleave', () => {
+        clearTimeout(timer);
+        timer = window.setTimeout(() => { byHover = false; setOpen(item, false); }, 250);
+      });
+    }
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && item.hasAttribute('data-open')) { setOpen(item, false); trigger.focus(); }
+    });
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains(e.relatedTarget as Node)) setOpen(item, false);
+    });
+  }
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('[data-menu]')) closeAll();
+  });
+
+  // Mobile menu (M06) — native <dialog> gives focus trapping and Esc.
+  const dialog = document.querySelector<HTMLDialogElement>('[data-mobile-menu]')!;
+  document.querySelector('[data-mobile-open]')?.addEventListener('click', () => dialog.showModal());
+  dialog.querySelectorAll('[data-mobile-close]').forEach((b) => b.addEventListener('click', () => dialog.close()));
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  dialog.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => dialog.close()));
+</script>

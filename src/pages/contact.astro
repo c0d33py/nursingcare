@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, href, waLink } from '../site';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import EmergencyNotice from '../components/EmergencyNotice.astro';
+
+const cards = [
+  { icon: 'phone', t: 'Call us', v: site.phone.display, d: 'Open 24/7', href: site.phone.href, ev: 'call_click' },
+  { icon: 'message-circle', t: 'WhatsApp', v: site.phone.display, d: 'We reply 24/7', href: waLink("Hello, I have a question.", 'WEB-CONTACT'), ev: 'whatsapp_click', ext: true },
+  { icon: 'map-pin', t: 'Visit our office', v: site.address.full, d: site.officeHours, href: site.directionsUrl, ext: true },
+  ...(site.email ? [{ icon: 'mail', t: 'Email', v: site.email, d: 'We reply within one working day', href: `mailto:${site.email}` }] : []),
+];
+const schema = [{ '@type': 'ContactPage', name: 'Contact Heaven Nursing Care 24/7', url: new URL(href('/contact'), Astro.site).href }];
+---
+
+<Base title="Contact Us | Heaven Nursing Care 24/7, Lahore" description="Call or WhatsApp 0308 2177778, 24/7, or visit us at 176-A Pak Arab Society, Lahore. We're here to help arrange care at home." schema={schema}>
+  <PageHero eyebrow="Contact" title="We're here, day and night" subtitle="Call or WhatsApp us 24/7, send a message, or visit our office in Lahore." crumbs={[{ label: 'Contact' }]} />
+
+  <section class="section pb-10">
+    <div class="container-x">
+      <ul class:list={['grid gap-5 sm:grid-cols-2', cards.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3']}>
+        {cards.map((c, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a href={c.href} class="card group flex h-full flex-col p-6 hover:border-primary" target={c.ext ? '_blank' : undefined} rel={c.ext ? 'noopener' : undefined} data-umami-event={c.ev} data-umami-event-placement="contact">
+              <span class="grid size-12 place-items-center rounded-2xl bg-primary text-white"><Icon name={c.icon} size={24} /></span>
+              <span class="mt-5 text-sm font-semibold uppercase tracking-[0.1em] text-muted">{c.t}</span>
+              <span class="mt-1 text-xl font-semibold text-ink group-hover:text-primary">{c.v}</span>
+              <span class="mt-1 text-muted">{c.d}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-8 flex flex-col items-start justify-between gap-4 rounded-[var(--radius-card)] bg-primary p-6 text-white sm:flex-row sm:items-center sm:p-8">
+        <div>
+          <p class="font-display text-2xl font-medium">Need care at home?</p>
+          <p class="mt-1 text-white/80">Use our booking form. It takes about two minutes.</p>
+        </div>
+        <a href={href('/book-a-visit')} class="btn btn-light">Book a home visit<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-10">
+    <div class="container-x grid gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="h2">Send us a message</h2>
+        <p class="mt-3 text-muted">For general questions, suppliers or anything else. We'll reply on WhatsApp or by phone.</p>
+        <form class="mt-8 space-y-5" data-wa-form data-ref="WEB-CONTACT" data-intro="Message from the website contact form:" data-thanks={href('/book-a-visit/thank-you?form=contact')}>
+          <div data-error-summary hidden tabindex="-1" role="alert" class="rounded-2xl border border-danger/30 bg-danger/5 p-4 text-danger"></div>
+          <div data-field="name" data-label="Name" data-required data-msg="Please enter your name.">
+            <label for="c-name" class="field-label">Your name</label>
+            <input id="c-name" name="name" class="input" autocomplete="name" />
+            <p class="field-error" data-error hidden></p>
+          </div>
+          <div data-field="phone" data-type="phone" data-label="Phone" data-required data-msg="Please enter a phone number we can reach you on, including the country code if you're outside Pakistan.">
+            <label for="c-phone" class="field-label">Phone / WhatsApp</label>
+            <input id="c-phone" name="phone" type="tel" class="input" autocomplete="tel" inputmode="tel" placeholder="+92 3XX XXXXXXX" />
+            <p class="field-error" data-error hidden></p>
+          </div>
+          <div data-field="message" data-label="Message" data-required data-msg="Please write a short message.">
+            <label for="c-msg" class="field-label">Message</label>
+            <textarea id="c-msg" name="message" class="input" maxlength="800"></textarea>
+            <p class="field-hint">Please don't share detailed medical records here.</p>
+            <p class="field-error" data-error hidden></p>
+          </div>
+          <div data-field="consent" data-skip data-required data-msg="Please confirm we can contact you.">
+            <label class="flex items-start gap-3 text-[0.98rem]">
+              <input type="checkbox" name="consent" class="mt-1 size-5 accent-[var(--color-primary)]" />
+              <span>I agree to Heaven Nursing Care 24/7 contacting me about this message, as described in the <a href={href('/legal/privacy-policy')} class="link">Privacy Policy</a>.</span>
+            </label>
+            <p class="field-error" data-error hidden></p>
+          </div>
+          <button type="submit" class="btn btn-primary">Send on WhatsApp</button>
+        </form>
+      </div>
+
+      <div class="space-y-6">
+        <a href={site.directionsUrl} target="_blank" rel="noopener" class="map-card group relative block aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] border border-line" aria-label="Open directions to our office in Google Maps">
+          <svg viewBox="0 0 400 300" class="absolute inset-0 h-full w-full" aria-hidden="true">
+            <rect width="400" height="300" fill="#eef6f7"></rect>
+            <path d="M-10 210 L410 120" stroke="#fff" stroke-width="26"></path>
+            <path d="M-10 210 L410 120" stroke="#f3d9a4" stroke-width="3" stroke-dasharray="10 10"></path>
+            <path d="M140 -10 L230 310" stroke="#fff" stroke-width="16"></path>
+            <path d="M300 -10 L280 310" stroke="#fff" stroke-width="12"></path>
+            <path d="M-10 70 L410 40" stroke="#fff" stroke-width="10"></path>
+            <rect x="30" y="230" width="80" height="50" rx="8" fill="#dcefed"></rect>
+            <rect x="250" y="190" width="110" height="80" rx="8" fill="#dcefed"></rect>
+            <rect x="30" y="90" width="90" height="70" rx="8" fill="#e6f1ef"></rect>
+            <rect x="240" y="60" width="40" height="40" rx="8" fill="#e6f1ef"></rect>
+            <text x="300" y="112" font-size="11" fill="#5b9aab" transform="rotate(-12 300 112)">Ferozepur Road</text>
+          </svg>
+          <span class="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-full">
+            <span class="relative grid size-14 place-items-center rounded-full rounded-br-none bg-primary text-white shadow-[var(--shadow-lift)] rotate-45"><span class="-rotate-45"><Icon name="house" size={24} /></span></span>
+          </span>
+          <span class="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 rounded-2xl bg-white/95 p-4 shadow-[var(--shadow-soft)]">
+            <span><span class="block font-semibold text-ink">{site.address.full}</span><span class="text-sm text-muted">Illustrative map · tap for directions</span></span>
+            <span class="btn btn-primary btn-sm">Get directions</span>
+          </span>
+        </a>
+        <div class="rounded-[var(--radius-card)] bg-cream p-6">
+          <p class="font-semibold text-ink">For hospitals & doctors</p>
+          <p class="mt-1 text-muted">Referring a patient? <a href={href('/for-hospitals-and-doctors')} class="link">See how referrals work</a>.</p>
+        </div>
+        <EmergencyNotice tone="callout" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/wa-form.ts';
+</script>

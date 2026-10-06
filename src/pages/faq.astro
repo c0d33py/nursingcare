@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { site, href, waLink } from '../site';
+import PageHero from '../components/PageHero.astro';
+import FaqList from '../components/FaqList.astro';
+import Icon from '../components/Icon.astro';
+import EmergencyNotice from '../components/EmergencyNotice.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const faqs = (await getCollection('faqs')).map((f) => ({ id: f.id, ...f.data }));
+const order = ['General', 'Services', 'Staff', 'Booking & scheduling', 'Family & communication', 'Privacy & safety', 'Families abroad'];
+const groups = order.map((c) => ({ c, id: c.toLowerCase().replace(/[^a-z]+/g, '-'), items: faqs.filter((f) => f.category === c) }));
+const schema = [{
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+}];
+---
+
+<Base title="Home Nursing FAQs | Heaven Nursing Care 24/7" description="Answers to common questions about home nursing in Lahore: staff, services, booking, shifts, safety, privacy and arranging care from abroad." schema={schema}>
+  <PageHero
+    eyebrow="FAQ"
+    title="Questions families ask us"
+    subtitle="Straight answers about our services, staff, booking and safety. Can't find yours? WhatsApp us, we're available 24/7."
+    crumbs={[{ label: 'FAQ' }]}
+  >
+    <div class="relative mt-8 max-w-xl">
+      <label for="faq-search" class="sr-only">Search questions</label>
+      <Icon name="search" size={20} class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+      <input id="faq-search" type="search" class="input !pl-12" placeholder="Search questions, e.g. “night nurse”" autocomplete="off" data-faq-search />
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[240px_1fr]">
+      <nav aria-label="FAQ categories" class="lg:sticky lg:top-[calc(var(--header-h)+24px)] lg:self-start">
+        <ul class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 lg:mx-0 lg:flex-col lg:px-0">
+          {groups.map((g) => (
+            <li class="shrink-0"><a href={`#${g.id}`} class="chip w-full justify-between lg:border-transparent lg:hover:border-line" data-faq-cat={g.id}>{g.c}<span class="text-sm text-muted">{g.items.length}</span></a></li>
+          ))}
+        </ul>
+      </nav>
+      <div class="space-y-12" data-faq-groups>
+        {groups.map((g) => (
+          <section id={g.id} class="scroll-mt-28" aria-labelledby={`${g.id}-h`} data-faq-group>
+            <h2 id={`${g.id}-h`} class="h3 mb-4">{g.c}</h2>
+            {g.id === 'general' && <EmergencyNotice tone="callout" class="mb-4" />}
+            <FaqList items={g.items} />
+          </section>
+        ))}
+        <p class="hidden rounded-2xl bg-cream p-6 text-ink" data-faq-empty>
+          No matching questions. <a href={waLink('I have a question.', 'WEB-FAQ')} class="link" target="_blank" rel="noopener">Ask us on WhatsApp</a> or call {site.phone.display}.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight bg-sky">
+    <div class="container-x flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+      <div>
+        <h2 class="h3">Didn't find your answer?</h2>
+        <p class="mt-1 text-muted">Our team replies on WhatsApp 24/7.</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href={waLink('I have a question.', 'WEB-FAQ')} class="btn btn-wa" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp us</a>
+        <a href={href('/book-a-visit')} class="btn btn-outline">Book a home visit</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('[data-faq-search]');
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-faq-group]')];
+  const empty = document.querySelector<HTMLElement>('[data-faq-empty]');
+  input?.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let total = 0;
+    for (const g of groups) {
+      let shown = 0;
+      for (const item of g.querySelectorAll<HTMLDetailsElement>('[data-faq]')) {
+        const hit = !q || item.textContent!.toLowerCase().includes(q);
+        item.hidden = !hit;
+        if (hit) shown++;
+        if (q && hit) item.open = true;
+      }
+      g.hidden = shown === 0;
+      total += shown;
+    }
+    empty?.classList.toggle('hidden', total > 0);
+  });
+</script>

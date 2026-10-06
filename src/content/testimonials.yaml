@@ -1,0 +1,46 @@
+# SAMPLE testimonials for layout only — each renders with a visible "Sample" label.
+# Replace with real, consented testimonials (docs/02 §9): set `sample: false` and `consent: true`.
+- id: t1
+  quote: "After Abbu's hip operation we didn't know how we'd manage at home. The nurse came every day for his dressing and injections and showed my mother exactly what to do. He's walking in the garden again."
+  name: "Ayesha K."
+  relation: "Daughter of a patient"
+  area: "Johar Town"
+  service: "post-surgery-care"
+  sample: true
+- id: t2
+  quote: "I live in Manchester, and the daily WhatsApp updates have been a lifeline. I get Ammi's BP and sugar every morning and a call whenever I ask. I finally sleep properly."
+  name: "Usman R."
+  relation: "Son, living in the UK"
+  area: "Gulberg"
+  service: "elderly-patient-care"
+  overseas: true
+  sample: true
+- id: t3
+  quote: "They changed my father's NG tube at home so gently. No ambulance, no hospital corridor. The nurse explained every step to us."
+  name: "Saba M."
+  relation: "Daughter of a patient"
+  area: "DHA"
+  service: "ng-tube-feeding-care"
+  sample: true
+- id: t4
+  quote: "We needed a female caregiver for my grandmother and they found someone kind and patient within a day. She's become part of the family."
+  name: "Hamza A."
+  relation: "Grandson of a patient"
+  area: "Model Town"
+  service: "elderly-patient-care"
+  sample: true
+- id: t5
+  quote: "The night nurse after my C-section meant I could actually rest. She helped with feeding and bathing the baby and was so calm."
+  name: "Mehwish T."
+  relation: "New mother"
+  area: "Bahria Town"
+  service: "mother-baby-care"
+  sample: true
+- id: t6
+  quote: "My brother and I are both in Dubai. Arranging care for our parents felt impossible until we found Heaven. One coordinator, clear updates, and a doctor's visit every month."
+  name: "Faisal & Nadia S."
+  relation: "Children, living in the UAE"
+  area: "Cantt"
+  service: "doctor-home-visit"
+  overseas: true
+  sample: true

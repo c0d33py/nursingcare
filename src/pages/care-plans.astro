@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../site';
+import { plans, durations, combos } from '../data/content';
+import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CareRing from '../components/CareRing.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const planIcons: Record<string, string> = { visit: 'calendar-check', day: 'sun', night: 'moon', '24h': 'clock' };
+const schema = [{
+  '@type': 'ItemList',
+  name: 'Home care plans',
+  itemListElement: plans.map((p, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Service', name: p.name, description: p.bestFor, areaServed: 'Lahore' } })),
+}];
+---
+
+<Base title="Home Care Plans: Visit, Day, Night, 24h | Heaven Nursing Care" description="Choose a single home visit, day or night shifts, or round-the-clock 24-hour care. We'll tailor a plan to your loved one's needs." schema={schema}>
+  <PageHero
+    eyebrow="Care plans"
+    title="Care arranged around your day — and night"
+    subtitle="A single visit, day or night shifts, or round-the-clock care. We'll shape a plan around your loved one."
+    crumbs={[{ label: 'Care plans' }]}
+    tone="cream"
+  />
+
+  <section class="section" aria-labelledby="ring-title">
+    <div class="container-x">
+      <SectionHeader id="ring-title" eyebrow="See the hours" title="Which hours does each option cover?" text="Choose an option to see the hours it covers." />
+      <div class="mt-12"><CareRing /></div>
+    </div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="cov-title">
+    <div class="container-x">
+      <SectionHeader id="cov-title" eyebrow="Coverage" title="Four ways to arrange care" />
+      <ul class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        {plans.map((p, i) => (
+          <li class="card flex flex-col p-6" data-reveal style={`--i:${i}`}>
+            <span class="grid size-12 place-items-center rounded-2xl bg-primary-soft text-primary"><Icon name={planIcons[p.id]} size={24} /></span>
+            <h3 class="h3 mt-5">{p.name}</h3>
+            <p class="text-sm font-semibold uppercase tracking-[0.08em] text-primary">{p.hours}</p>
+            <p class="mt-3 text-muted"><strong class="text-ink">Best for:</strong> {p.bestFor}</p>
+            <p class="mt-2 text-muted"><strong class="text-ink">Typically:</strong> {p.who}</p>
+            <ul class="mt-4 space-y-1.5 text-[0.95rem]">
+              {p.examples.map((e) => <li class="flex items-start gap-2"><Icon name="check" size={17} class="mt-1 shrink-0 text-primary" />{e}</li>)}
+            </ul>
+            <a href={href(`/book-a-visit?plan=${p.id}`)} class="btn btn-outline btn-sm mt-auto self-start">Get this plan</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="dur-title">
+    <div class="container-x">
+      <SectionHeader id="dur-title" eyebrow="Duration" title="For a day, a few weeks or as long as you need" />
+      <ul class="mt-12 grid gap-5 md:grid-cols-3">
+        {durations.map((d, i) => (
+          <li class="rounded-[var(--radius-card)] border border-line p-7" data-reveal style={`--i:${i}`}>
+            <Icon name={d.icon} size={30} class="text-primary" />
+            <h3 class="h3 mt-4">{d.title}</h3>
+            <p class="mt-2 text-muted">{d.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-cream" aria-labelledby="combo-title">
+    <div class="container-x">
+      <SectionHeader id="combo-title" eyebrow="Combining services" title="Most families mix and match" text="Care works best when it fits real life. Here are three common combinations." />
+      <ul class="mt-12 grid gap-5 md:grid-cols-3">
+        {combos.map((c, i) => (
+          <li class="rounded-[var(--radius-card)] bg-white p-7 shadow-[var(--shadow-soft)]" data-reveal style={`--i:${i}`}>
+            <h3 class="h3">{c.title}</h3>
+            <ol class="mt-5 space-y-3">
+              {c.parts.map((p, j) => (
+                <li class="flex items-center gap-3"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-accent font-semibold text-ink">{j + 1}</span><span class="text-ink">{p}</span></li>
+              ))}
+            </ol>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cost-title">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl rounded-[var(--radius-card)] border border-line p-8 text-center sm:p-12" data-reveal>
+        <Icon name="wallet" size={36} class="mx-auto text-primary" />
+        <h2 id="cost-title" class="h2 mt-5">How the cost is worked out</h2>
+        <p class="mt-4 text-lg text-muted">
+          Cost depends on the type of professional, the services needed and the hours of care. Once we understand the patient's needs, we'll give you a clear quote before care begins, with no hidden charges.
+        </p>
+        <a href={href('/book-a-visit')} class="btn btn-primary mt-8">Get a care plan & quote</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand waMessage="I'd like help choosing a care plan." waRef="WEB-PLAN" />
+</Base>

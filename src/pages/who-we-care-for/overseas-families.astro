@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site, href, waLink } from '../../site';
+import { photos } from '../../data/photos';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ChatMock from '../../components/ChatMock.astro';
+import TrustStrip from '../../components/TrustStrip.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import FaqList from '../../components/FaqList.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const msg = 'I live abroad and would like to arrange care for my family member in Lahore.';
+const wa = waLink(msg, 'WEB-ABROAD');
+const faqs = (await getCollection('faqs')).filter((f) => f.data.category === 'Families abroad').map((f) => ({ id: f.id, ...f.data }));
+const help = [
+  { icon: 'user-round', t: 'One coordinator', d: 'A single point of contact who knows your parent and answers your messages.' },
+  { icon: 'messages-square', t: 'Daily WhatsApp updates', d: 'Vitals, medicines, meals and mood, every day, at a time that suits you.' },
+  { icon: 'video', t: 'Video calls', d: 'See your parent and talk to their carer whenever you like.' },
+  { icon: 'file-text', t: 'Doctor visit summaries', d: 'A clear summary after every doctor’s visit, with any changes to medicines.' },
+  { icon: 'building-2', t: 'Hospital coordination', d: 'We liaise with hospitals and specialists in Lahore on your behalf.' },
+  { icon: 'shield-check', t: 'Help if things change', d: 'An immediate call if anything changes, and a plan to respond.' },
+];
+const steps = [
+  { t: 'Message us on WhatsApp', d: `+92 308 2177778, from anywhere in the world, at any hour.` },
+  { t: 'We assess in Lahore', d: 'A nurse visits your parent at home, ideally with a relative or neighbour present. We video call you during the visit.' },
+  { t: 'Agree the plan', d: 'We share a written care plan and quote. You approve it from abroad.' },
+  { t: 'Care begins', d: 'Your first update arrives on the first day, then every day after that.' },
+];
+---
+
+<Base title="Care for Parents in Lahore from Abroad | Heaven Nursing Care" description="Living overseas? Arrange trusted nursing and elderly care for your parents in Lahore, with a dedicated coordinator and regular WhatsApp updates.">
+  <PageHero
+    eyebrow="Families living abroad"
+    title="Caring for your parents in Lahore, wherever you are"
+    subtitle="You can't be there every day. We can, with daily updates so you're never in the dark."
+    crumbs={[{ label: 'Who we care for', href: href('/who-we-care-for') }, { label: 'Families abroad' }]}
+    image={photos.elderlyPhone}
+    imageAlt="An elderly woman smiling at a message on her phone"
+    imagePosition="65% center"
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="overseas"><Icon name="message-circle" size={20} />WhatsApp {site.phone.intl}</a>
+      <a href={href('/book-a-visit?situation=Arranging%20care%20from%20abroad')} class="btn btn-outline">Request a call back</a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="worry-title">
+    <div class="container-x max-w-4xl text-center">
+      <h2 id="worry-title" class="h2" data-reveal>When a parent's health changes and you're thousands of miles away, every phone call feels heavy.</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg text-muted" data-reveal style="--i:1">Many of the families we care for live in the UK, the Gulf, Canada and the US. We become their trusted hands in Lahore, and their eyes too.</p>
+    </div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="help-title">
+    <div class="container-x">
+      <SectionHeader id="help-title" eyebrow="How we help from afar" title="Everything you'd do if you were here" />
+      <ul class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {help.map((h, i) => (
+          <li class="card p-6" data-reveal style={`--i:${i}`}>
+            <span class="grid size-12 place-items-center rounded-2xl bg-primary-soft text-primary"><Icon name={h.icon} size={24} /></span>
+            <h3 class="h3 mt-4">{h.t}</h3>
+            <p class="mt-2 text-muted">{h.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="day-title">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[1fr_0.9fr]">
+      <div>
+        <SectionHeader id="day-title" eyebrow="A day of updates" title="Peace of mind, one message at a time" text="This is what a typical day of updates looks like. Short, clear and on time, so you can get on with your day knowing your parent is well looked after." />
+        <ol class="mt-10 space-y-6">
+          {steps.map((s, i) => (
+            <li class="flex gap-4" data-reveal style={`--i:${i}`}>
+              <span class="grid size-10 shrink-0 place-items-center rounded-full bg-accent font-display font-semibold text-ink">{i + 1}</span>
+              <span><span class="block font-semibold text-ink">{s.t}</span><span class="text-muted">{s.d}</span></span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <ChatMock />
+    </div>
+  </section>
+
+  <section class="section-tight bg-cream" aria-labelledby="pay-title">
+    <div class="container-x grid items-center gap-6 md:grid-cols-[auto_1fr]">
+      <span class="grid size-16 place-items-center rounded-2xl bg-white text-primary"><Icon name="globe" size={32} /></span>
+      <div>
+        <h2 id="pay-title" class="h3">Paying from abroad</h2>
+        <p class="mt-1 text-muted">International bank transfer works well, or a family member in Pakistan can pay locally by cash, bank transfer, JazzCash or Easypaisa. You'll always get a clear quote first.</p>
+      </div>
+    </div>
+  </section>
+
+  <TrustStrip />
+
+  <section class="section" aria-labelledby="t-title">
+    <div class="container-x">
+      <SectionHeader id="t-title" eyebrow="Testimonials" title="From families abroad" />
+      <div class="mt-8"><Testimonials overseas /></div>
+    </div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="faq-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader id="faq-title" eyebrow="FAQ" title="Questions from families abroad" />
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand variant="overseas" title="Let's look after your parents together." text="Message us on WhatsApp from anywhere in the world. We reply 24/7." waMessage={msg} waRef="WEB-ABROAD" waLabel="WhatsApp us" />
+</Base>

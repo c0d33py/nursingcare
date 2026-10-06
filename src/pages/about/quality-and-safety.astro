@@ -1,0 +1,129 @@
+---
+import Base from '../../layouts/Base.astro';
+import { href, site } from '../../site';
+import { photos } from '../../data/photos';
+import { standards } from '../../data/content';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const procedures = [
+  { p: 'Doctor’s examination, diagnosis support, prescriptions', role: 'Doctor' },
+  { p: 'IV medication, drips, cannulation', role: 'Qualified nurse' },
+  { p: 'NG tube insertion and changes', role: 'Qualified nurse' },
+  { p: 'Urinary catheter insertion and changes', role: 'Qualified nurse' },
+  { p: 'IM and subcutaneous injections', role: 'Qualified nurse or paramedic' },
+  { p: 'Wound care and dressings', role: 'Nurse' },
+  { p: 'Vital signs monitoring', role: 'Nurse or assistant nurse' },
+  { p: 'Personal care, feeding, mobility', role: 'Caregiver (aya) or assistant nurse' },
+];
+const escalation = [
+  { icon: 'eye', t: 'Notice', d: 'Staff watch for changes: readings out of range, pain, fever, confusion.' },
+  { icon: 'phone-call', t: 'Inform', d: 'The family and our clinical lead are called straight away.' },
+  { icon: 'stethoscope', t: 'Review', d: 'A doctor’s advice or a home visit is arranged where needed.' },
+  { icon: 'siren', t: 'Emergency', d: 'In an emergency, staff call Rescue 1122 and stay with the patient.' },
+];
+---
+
+<Base title="Quality & Patient Safety | Heaven Nursing Care" description="How we keep home care safe: qualified staff for procedures, infection control, medication only as prescribed and clear family communication.">
+  <PageHero
+    eyebrow="Quality & safety"
+    title="Safe, careful, accountable care"
+    subtitle="The standards behind every visit, from who carries out each procedure to how we keep your family informed."
+    crumbs={[{ label: 'About', href: href('/about') }, { label: 'Quality & safety' }]}
+    image={photos.ivDrip}
+    imageAlt="A nurse wearing a mask adjusting an IV drip"
+    imagePosition="center 30%"
+  />
+
+  <section class="section" aria-labelledby="std-title">
+    <div class="container-x">
+      <SectionHeader id="std-title" eyebrow="Our standards" title="Six commitments, at every visit" />
+      <ul class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {standards.map((s, i) => (
+          <li class="card p-6" data-reveal style={`--i:${i}`}>
+            <span class="grid size-12 place-items-center rounded-2xl bg-primary text-white"><Icon name={s.icon} size={24} /></span>
+            <h3 class="h3 mt-5">{s.title}</h3>
+            <p class="mt-2 text-muted">{s.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="proc-title">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader id="proc-title" eyebrow="Clinical procedures" title="The right person for every procedure" text="Clinical procedures are carried out only by staff qualified to perform them. This is how we assign them." />
+      <div class="overflow-hidden rounded-[var(--radius-card)] border border-line bg-white" data-reveal>
+        <table class="w-full text-left">
+          <caption class="sr-only">Minimum role for each procedure</caption>
+          <thead class="bg-cream text-sm"><tr><th scope="col" class="p-4 font-semibold text-ink">Procedure</th><th scope="col" class="p-4 font-semibold text-ink">Carried out by</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {procedures.map((r) => <tr><th scope="row" class="p-4 font-medium text-ink">{r.p}</th><td class="p-4 text-muted">{r.role}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ipc-title">
+    <div class="container-x grid gap-10 lg:grid-cols-2">
+      <div class="rounded-[var(--radius-card)] border border-line p-8" data-reveal>
+        <Icon name="droplet" size={32} class="text-primary" />
+        <h2 id="ipc-title" class="h3 mt-4">Infection control</h2>
+        <ul class="mt-4 space-y-2.5 text-muted">
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Hand hygiene before and after every patient contact</li>
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Single-use sterile supplies for injections, cannulas, catheters and dressings</li>
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Safe disposal of sharps and clinical waste</li>
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Gloves, masks and aprons as the procedure requires</li>
+        </ul>
+      </div>
+      <div class="rounded-[var(--radius-card)] border border-line p-8" data-reveal style="--i:1">
+        <Icon name="pill" size={32} class="text-primary" />
+        <h2 class="h3 mt-4">Medication safety</h2>
+        <ul class="mt-4 space-y-2.5 text-muted">
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Medicines given only against a valid prescription</li>
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Right patient, right medicine, right dose, right time, right route</li>
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Every dose recorded and shared with the family</li>
+          <li class="flex gap-2"><Icon name="check" size={18} class="mt-1 shrink-0 text-primary" />Patients observed after injections and IV medication</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-night text-white" aria-labelledby="esc-title">
+    <div class="container-x">
+      <SectionHeader id="esc-title" eyebrow="If a patient's condition changes" title="Clear steps, every time" invert />
+      <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {escalation.map((e, i) => (
+          <li class="relative rounded-[var(--radius-card)] bg-white/[0.06] p-6 ring-1 ring-white/10" data-reveal style={`--i:${i}`}>
+            <span class="text-sm font-semibold text-accent">Step {i + 1}</span>
+            <Icon name={e.icon} size={30} class="mt-3 text-white" />
+            <h3 class="mt-4 text-xl font-semibold !text-white">{e.t}</h3>
+            <p class="mt-1.5 text-white/75">{e.d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fb-title">
+    <div class="container-x grid gap-10 lg:grid-cols-3">
+      <div class="lg:col-span-1">
+        <SectionHeader id="fb-title" eyebrow="Privacy, dignity & feedback" title="Respect, in every home" />
+      </div>
+      <div class="grid gap-5 sm:grid-cols-3 lg:col-span-2">
+        <div class="rounded-2xl bg-cream p-6" data-reveal><h3 class="font-semibold text-ink">Privacy & dignity</h3><p class="mt-2 text-muted">Personal care in private, same-gender staff on request, and respect for household customs.</p></div>
+        <div class="rounded-2xl bg-cream p-6" data-reveal style="--i:1"><h3 class="font-semibold text-ink">Confidentiality</h3><p class="mt-2 text-muted">Patient information is shared only with the staff involved in their care.</p></div>
+        <div class="rounded-2xl bg-cream p-6" data-reveal style="--i:2"><h3 class="font-semibold text-ink">Feedback & concerns</h3><p class="mt-2 text-muted">Call or WhatsApp {site.phone.display}. We acknowledge every concern within 24 hours.</p></div>
+      </div>
+    </div>
+    <div class="container-x mt-10 flex flex-wrap gap-3">
+      <a href={href('/legal/patient-rights')} class="btn btn-outline">Patient rights & responsibilities</a>
+      <a href={href('/about/care-team')} class="btn btn-outline">How we select staff</a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

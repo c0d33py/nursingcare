@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { href, site, waLink } from '../site';
+import { photos } from '../data/photos';
+import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Icon from '../components/Icon.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const faqs = (await getCollection('faqs')).filter((f) => f.data.category === 'Booking & scheduling').map((f) => ({ id: f.id, ...f.data }));
+const detail = [
+  { icon: 'message-circle', t: "1 · Tell us what's needed", d: `Call or WhatsApp ${site.phone.display} at any hour, or book online. We'll ask who needs care, what's needed, when you'd like it to start and your area in Lahore. It takes about five minutes.` },
+  { icon: 'clipboard-list', t: '2 · Care assessment', d: "A nurse reviews the patient's condition, prescriptions and home setting, by phone for simple visits or at home for ongoing care. For anything clinical, we confirm it's safe to do at home." },
+  { icon: 'users', t: '3 · We match the right professional', d: "We choose a doctor, nurse, paramedic, assistant nurse or caregiver for the patient's needs and your preferences (staff gender, language, timing), then share their name and arrival time." },
+  { icon: 'house', t: '4 · Care begins, and you stay informed', d: 'Your carer arrives on time, introduces themselves and follows the agreed plan. You get regular updates on WhatsApp, and we review the plan as needs change.' },
+];
+const prepare = [
+  'Current prescriptions and a list of medicines',
+  'Any hospital discharge summary or recent reports',
+  "The patient's daily routine: meals, sleep, mobility",
+  'Your preferences, for example staff gender or language',
+  'Any medical equipment already at home',
+];
+---
+
+<Base title="How Home Nursing Care Works | Heaven Nursing Care" description="From your first call to the first visit: how we assess needs, match the right professional and keep your family informed.">
+  <PageHero
+    eyebrow="How it works"
+    title="From first call to first visit"
+    subtitle="Exactly what happens when you contact us, and how we make sure the care fits."
+    crumbs={[{ label: 'About', href: href('/about') }, { label: 'How it works' }]}
+    image={photos.bpCheckAtHome}
+    imageAlt="A home-care nurse checking an older woman's blood pressure on her sofa"
+    imagePosition="60% center"
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href={href('/book-a-visit')} class="btn btn-primary">Book a home visit</a>
+      <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp us</a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-label="The four steps">
+    <div class="container-x"><HowItWorks /></div>
+  </section>
+
+  <section class="section bg-sky" aria-labelledby="detail-title">
+    <div class="container-x">
+      <SectionHeader id="detail-title" eyebrow="In detail" title="What happens at each step" />
+      <ol class="mt-12 grid gap-5 md:grid-cols-2">
+        {detail.map((s, i) => (
+          <li class="card flex gap-5 p-7" data-reveal style={`--i:${i}`}>
+            <span class="grid size-14 shrink-0 place-items-center rounded-2xl bg-primary text-white"><Icon name={s.icon} size={26} /></span>
+            <span><h3 class="h3">{s.t}</h3><p class="mt-2 text-muted">{s.d}</p></span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="what-to-have-ready" class="section" aria-labelledby="ready-title">
+    <div class="container-x grid gap-10 lg:grid-cols-2">
+      <div>
+        <SectionHeader id="ready-title" eyebrow="Before the first visit" title="What to have ready" text="Having these to hand makes the assessment quicker, and the care safer." />
+      </div>
+      <ul class="space-y-3 rounded-[var(--radius-card)] bg-cream p-7" data-reveal>
+        {prepare.map((p) => <li class="flex items-start gap-3 text-ink"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent text-ink"><Icon name="check" size={16} /></span>{p}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bg-cream" aria-labelledby="after-title">
+    <div class="container-x grid gap-5 md:grid-cols-3">
+      <h2 id="after-title" class="sr-only">After care begins</h2>
+      {[
+        { icon: 'user-round', t: 'The first visit', d: "Your carer introduces themselves, checks the plan with you and settles in. For clinical care, they'll go through prescriptions and the patient's routine first." },
+        { icon: 'refresh-ccw', t: 'Changing or extending care', d: 'Needs change, and so can the plan. Add visits, switch to night shifts or step down as recovery progresses. Just let your coordinator know.' },
+        { icon: 'messages-square', t: 'How we keep you updated', d: 'A short daily WhatsApp update covering vitals, medicines, meals and anything to watch, plus a call straight away if anything changes.' },
+      ].map((c, i) => (
+        <div class="rounded-[var(--radius-card)] bg-white p-7" data-reveal style={`--i:${i}`}>
+          <Icon name={c.icon} size={30} class="text-primary" />
+          <h3 class="h3 mt-4">{c.t}</h3>
+          <p class="mt-2 text-muted">{c.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeader id="faq-title" eyebrow="FAQ" title="Booking & scheduling questions" />
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

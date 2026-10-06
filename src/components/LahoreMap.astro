@@ -1,0 +1,99 @@
+---
+// M33 — stylised (illustrative) map of Lahore + the accessible, filterable area list (the real content).
+import { href, site } from '../site';
+import { areas } from '../data/content';
+import Icon from './Icon.astro';
+
+const sorted = [...areas].sort((a, b) => a.name.localeCompare(b.name));
+const slug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+---
+
+<div class="lahore grid items-start gap-10 lg:grid-cols-[1.2fr_1fr]" data-map>
+  <figure class="map-frame relative">
+    <svg viewBox="0 0 600 520" class="w-full" role="img" aria-label={`Illustrative map of Lahore showing ${areas.length} areas we serve, with our base at Pak Arab Society`}>
+      <defs>
+        <linearGradient id="map-land" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"></stop><stop offset="1" stop-color="#eef6f7"></stop></linearGradient>
+      </defs>
+      <path d="M120 120 C 180 70, 300 60, 380 90 C 470 120, 530 170, 540 250 C 552 330, 520 400, 450 440 C 380 480, 260 500, 170 490 C 90 480, 50 420, 60 340 C 68 270, 70 170, 120 120 Z" fill="url(#map-land)" stroke="#cfe3e6" stroke-width="2"></path>
+      <path d="M20 250 C 70 200, 100 140, 140 100 C 180 62, 230 46, 300 34" fill="none" stroke="#9fd0dc" stroke-width="10" stroke-linecap="round" opacity="0.7"></path>
+      <text x="58" y="150" font-size="13" fill="#5b9aab" font-style="italic" transform="rotate(-42 58 150)">River Ravi</text>
+      <path d="M262 92 C 280 200, 300 300, 352 488" fill="none" stroke="#9fd0dc" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 8" opacity="0.9"></path>
+      {areas.map((a) => (
+        <g class:list={['map-dot', 'hq' in a && 'is-hq']} transform={`translate(${a.x} ${a.y})`} data-area={slug(a.name)}>
+          {'hq' in a ? (
+            <>
+              <circle r="22" class="hq-pulse"></circle>
+              <circle r="11" fill="var(--color-accent)" stroke="#fff" stroke-width="3"></circle>
+            </>
+          ) : <circle r="7" fill="var(--color-primary)" stroke="#fff" stroke-width="2.5"></circle>}
+          <text y={'hq' in a ? -20 : -13} text-anchor="middle" class="map-label">{a.name}</text>
+        </g>
+      ))}
+    </svg>
+    <figcaption class="mt-2 text-center text-sm text-muted">Illustrative map, not to scale</figcaption>
+  </figure>
+
+  <div>
+    <label for="area-filter" class="field-label">Find your area</label>
+    <div class="relative">
+      <Icon name="search" size={20} class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+      <input id="area-filter" type="search" class="input !pl-12" placeholder="e.g. Johar Town" autocomplete="off" data-area-filter />
+    </div>
+    <ul class="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2" data-area-list>
+      {sorted.map((a) => (
+        <li data-area-item={slug(a.name)} data-name={a.name.toLowerCase()}>
+          <span class="flex min-h-12 items-center gap-2.5 rounded-xl border border-line bg-white px-4 font-medium text-ink" tabindex="0">
+            <Icon name={'hq' in a ? 'map-pin' : 'check'} size={18} class={'hq' in a ? 'text-accent' : 'text-primary'} />{a.name}{'hq' in a && <span class="text-sm text-muted">(our base)</span>}
+          </span>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-5 hidden rounded-2xl bg-cream p-4 text-ink" data-area-empty>
+      Not listed? We may still cover you. <a href={href('/contact')} class="link">Ask us</a> or WhatsApp {site.phone.display}.
+    </p>
+  </div>
+</div>
+
+<style>
+  .map-frame :global(svg) { transition: transform 600ms var(--ease-out); }
+  :global(html[data-motion="A"]) .map-frame { perspective: 1200px; }
+  :global(html[data-motion="A"]) .map-frame :global(svg) { transform: rotateX(8deg); }
+  :global(html[data-motion="A"]) .map-frame:hover :global(svg) { transform: rotateX(3deg); }
+  .map-label { font-size: 12px; font-weight: 600; fill: var(--color-ink); opacity: 0; transition: opacity 200ms; paint-order: stroke; stroke: #fff; stroke-width: 4px; }
+  .map-dot.is-hq .map-label, .map-dot.is-hot .map-label { opacity: 1; }
+  .map-dot circle { transition: r 200ms; }
+  .map-dot.is-hot:not(.is-hq) circle { r: 10; }
+  .hq-pulse { fill: var(--color-accent); opacity: 0.25; transform-origin: center; animation: hq 2s var(--ease-out) 2; }
+  @keyframes hq { from { transform: scale(0.5); opacity: 0.5; } to { transform: scale(1.6); opacity: 0; } }
+  .map-dot { opacity: 1; transition: opacity 400ms; }
+  [data-area-item].is-hot > span { border-color: var(--color-primary); background: var(--color-primary-soft); }
+</style>
+
+<script>
+  for (const map of document.querySelectorAll<HTMLElement>('[data-map]')) {
+    const dots = [...map.querySelectorAll<SVGGElement>('[data-area]')];
+    const items = [...map.querySelectorAll<HTMLElement>('[data-area-item]')];
+    const hot = (id: string | null) => {
+      dots.forEach((d) => d.classList.toggle('is-hot', d.dataset.area === id));
+      items.forEach((i) => i.classList.toggle('is-hot', i.dataset.areaItem === id));
+    };
+    for (const i of items) {
+      const span = i.firstElementChild as HTMLElement;
+      for (const ev of ['pointerenter', 'focus']) span.addEventListener(ev, () => hot(i.dataset.areaItem!));
+      for (const ev of ['pointerleave', 'blur']) span.addEventListener(ev, () => hot(null));
+    }
+    for (const d of dots) {
+      d.addEventListener('pointerenter', () => hot(d.dataset.area!));
+      d.addEventListener('pointerleave', () => hot(null));
+    }
+    const input = map.querySelector<HTMLInputElement>('[data-area-filter]');
+    const empty = map.querySelector<HTMLElement>('[data-area-empty]');
+    input?.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const i of items) { const ok = !q || i.dataset.name!.includes(q); i.hidden = !ok; if (ok) shown++; }
+      dots.forEach((d) => (d.style.opacity = !q || items.find((i) => i.dataset.areaItem === d.dataset.area && !i.hidden) ? '1' : '0.2'));
+      empty?.classList.toggle('hidden', shown > 0);
+    });
+  }
+</script>

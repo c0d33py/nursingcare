@@ -1,0 +1,210 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site, href, waLink } from '../../site';
+import { areas, plans } from '../../data/content';
+import Icon from '../../components/Icon.astro';
+import EmergencyNotice from '../../components/EmergencyNotice.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const areaNames = [...areas].map((a) => a.name).sort((a, b) => a.localeCompare(b));
+const who = ['My parent', 'My spouse', 'Myself', 'My child', 'Another relative', 'Someone else'];
+const ages = ['Under 18', '18–59', '60–74', '75+'];
+const starts = [{ v: 'today', l: 'Today' }, { v: 'tomorrow', l: 'Tomorrow' }, { v: 'week', l: 'This week' }, { v: 'date', l: 'Pick a date' }];
+const today = new Date().toISOString().slice(0, 10);
+---
+
+<Base title="Book a Home Visit | Heaven Nursing Care 24/7" description="Tell us what your loved one needs and we'll call you back to arrange the right professional at home in Lahore.">
+  <section class="bg-sky">
+    <div class="container-x py-10 lg:py-14">
+      <p class="eyebrow mb-4">Get started</p>
+      <h1 class="h1">Book a home visit</h1>
+      <p class="lead mt-4 max-w-2xl">Tell us a little about what's needed. We'll call or WhatsApp you to confirm the details. There's no obligation.</p>
+    </div>
+  </section>
+
+  <section class="section pt-10">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_360px]">
+      <div class="max-w-[680px]">
+        <EmergencyNotice tone="callout" class="mb-8" />
+        <noscript>
+          <p class="mb-6 rounded-2xl bg-accent-soft p-4 text-ink">This form needs JavaScript. Please <a class="link" href={waLink("I'd like to book a home visit.", 'WEB-BOOK')}>WhatsApp us</a> or call <a class="link" href={site.phone.href}>{site.phone.display}</a>. We're available 24/7.</p>
+        </noscript>
+
+        <ol class="mb-8 grid grid-cols-2 gap-3 text-[0.98rem] font-semibold" aria-label="Form progress">
+          <li class="step-ind" data-step-indicator aria-current="step"><span>1</span>About the care</li>
+          <li class="step-ind" data-step-indicator><span>2</span>Your details</li>
+        </ol>
+
+        <form class="space-y-8" data-wa-form data-ref="WEB-BOOK" data-intro="I'd like to book a home visit." data-thanks={href('/book-a-visit/thank-you?form=booking')}>
+          <div data-error-summary hidden tabindex="-1" role="alert" class="rounded-2xl border border-danger/30 bg-danger/5 p-4 text-danger"></div>
+
+          <div data-situation data-field="situation" data-label="Situation" hidden class="flex items-center gap-2 rounded-2xl bg-cream p-4 text-ink">
+            <Icon name="info" size={20} class="text-primary" /><span>Situation: <strong data-situation-text></strong></span>
+            <input type="hidden" name="situation" />
+          </div>
+
+          <fieldset class="space-y-8" data-step>
+            <legend class="h3 outline-none">1. About the care</legend>
+
+            <div data-field="who" data-label="Who needs care" data-required data-msg="Please tell us who needs care." role="radiogroup" aria-labelledby="l-who">
+              <p id="l-who" class="field-label">Who needs care?</p>
+              <div class="flex flex-wrap gap-2">
+                {who.map((w, i) => <label class="choice"><input id={i === 0 ? 'f-who' : undefined} type="radio" name="who" value={w} /><span>{w}</span></label>)}
+              </div>
+              <p class="field-error" data-error hidden></p>
+            </div>
+
+            <div data-field="age" data-label="Patient's age" role="radiogroup" aria-labelledby="l-age">
+              <p id="l-age" class="field-label">Patient's age <span class="font-normal text-muted">(optional)</span></p>
+              <div class="flex flex-wrap gap-2">
+                {ages.map((a) => <label class="choice"><input type="radio" name="age" value={a} /><span>{a}</span></label>)}
+              </div>
+            </div>
+
+            <div data-field="services" data-label="Services" data-required data-msg="Please choose at least one service, or select 'Not sure'." role="group" aria-labelledby="l-svc">
+              <p id="l-svc" class="field-label">Services needed</p>
+              <p class="field-hint -mt-1 mb-3">Choose all that apply. Not sure? Pick “Not sure” and we'll help.</p>
+              <div class="flex flex-wrap gap-2">
+                {services.map((s, i) => <label class="choice"><input id={i === 0 ? 'f-services' : undefined} type="checkbox" name="services" value={s.id} /><span>{s.data.title}</span></label>)}
+                <label class="choice"><input type="checkbox" name="services" value="not-sure" /><span>Not sure</span></label>
+              </div>
+              <p class="field-error" data-error hidden></p>
+            </div>
+
+            <div data-field="plan" data-label="Type of care" data-required data-msg="Please choose the type of care." role="radiogroup" aria-labelledby="l-plan">
+              <p id="l-plan" class="field-label">Type of care</p>
+              <div class="flex flex-wrap gap-2">
+                {plans.map((p, i) => <label class="choice"><input id={i === 0 ? 'f-plan' : undefined} type="radio" name="plan" value={p.id} /><span>{p.name}</span></label>)}
+                <label class="choice"><input type="radio" name="plan" value="not-sure" /><span>Not sure yet</span></label>
+              </div>
+              <p class="field-error" data-error hidden></p>
+            </div>
+
+            <div data-field="start" data-label="Start" data-required data-msg="Please tell us when care should start." role="radiogroup" aria-labelledby="l-start">
+              <p id="l-start" class="field-label">When should care start?</p>
+              <div class="flex flex-wrap gap-2">
+                {starts.map((s, i) => <label class="choice"><input id={i === 0 ? 'f-start' : undefined} type="radio" name="start" value={s.v} /><span>{s.l}</span></label>)}
+              </div>
+              <p class="field-error" data-error hidden></p>
+            </div>
+            <div data-show-when="start=date" hidden>
+              <div data-field="date" data-label="Preferred date" data-required data-msg="Please pick a date.">
+                <label for="f-date" class="field-label">Preferred date</label>
+                <input id="f-date" type="date" name="date" min={today} class="input max-w-xs" />
+                <p class="field-error" data-error hidden></p>
+              </div>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div data-field="area" data-label="Area" data-required data-msg="Please choose your area.">
+                <label for="f-area" class="field-label">Area in Lahore</label>
+                <select id="f-area" name="area" class="input">
+                  <option value="">Choose an area</option>
+                  {areaNames.map((a) => <option value={a}>{a}</option>)}
+                  <option value="other">Other area</option>
+                </select>
+                <p class="field-error" data-error hidden></p>
+              </div>
+              <div data-show-when="area=other" hidden>
+                <div data-field="area-other" data-label="Other area" data-required data-msg="Please type your area.">
+                  <label for="f-area-other" class="field-label">Your area</label>
+                  <input id="f-area-other" name="areaOther" class="input" />
+                  <p class="field-error" data-error hidden></p>
+                </div>
+              </div>
+            </div>
+
+            <div data-field="gender" data-label="Staff preference" role="radiogroup" aria-labelledby="l-gender">
+              <p id="l-gender" class="field-label">Staff preference <span class="font-normal text-muted">(optional)</span></p>
+              <div class="flex flex-wrap gap-2">
+                {['No preference', 'Female', 'Male'].map((g) => <label class="choice"><input type="radio" name="gender" value={g} /><span>{g}</span></label>)}
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" data-next>Continue<Icon name="arrow-right" size={18} class="btn-arrow" /></button>
+          </fieldset>
+
+          <fieldset class="space-y-6" data-step>
+            <legend class="h3 outline-none">2. Your details</legend>
+            <div data-field="name" data-label="Name" data-required data-msg="Please enter your name.">
+              <label for="f-name" class="field-label">Your name</label>
+              <input id="f-name" name="name" class="input" autocomplete="name" />
+              <p class="field-error" data-error hidden></p>
+            </div>
+            <div data-field="phone" data-type="phone" data-label="Phone" data-required data-msg="Please enter a phone number we can reach you on, including the country code if you're outside Pakistan.">
+              <label for="f-phone" class="field-label">Phone / WhatsApp number</label>
+              <input id="f-phone" name="phone" type="tel" class="input" autocomplete="tel" inputmode="tel" placeholder="+92 3XX XXXXXXX" />
+              <p class="field-hint">We'll contact you on this number. Outside Pakistan? Include your country code.</p>
+              <p class="field-error" data-error hidden></p>
+            </div>
+            <div data-field="contact" data-label="Contact by" data-required data-msg="Please choose how we should contact you." role="radiogroup" aria-labelledby="l-contact">
+              <p id="l-contact" class="field-label">How should we contact you?</p>
+              <div class="flex flex-wrap gap-2">
+                <label class="choice"><input id="f-contact" type="radio" name="contact" value="WhatsApp" checked /><span>WhatsApp</span></label>
+                <label class="choice"><input type="radio" name="contact" value="Phone call" /><span>Phone call</span></label>
+              </div>
+              <p class="field-error" data-error hidden></p>
+            </div>
+            <div data-field="notes" data-label="Notes">
+              <label for="f-notes" class="field-label">Anything else we should know? <span class="font-normal text-muted">(optional)</span></label>
+              <textarea id="f-notes" name="notes" class="input" maxlength="500"></textarea>
+              <p class="field-hint">Please don't share detailed medical records here. We'll ask what we need when we call.</p>
+            </div>
+            <div data-field="consent" data-skip data-required data-msg="Please confirm we can contact you about this request.">
+              <label class="flex items-start gap-3 text-[0.98rem]">
+                <input id="f-consent" type="checkbox" name="consent" class="mt-1 size-5 shrink-0 accent-[var(--color-primary)]" />
+                <span>I agree to Heaven Nursing Care 24/7 contacting me about this request and handling my details as described in the <a href={href('/legal/privacy-policy')} class="link">Privacy Policy</a>.</span>
+              </label>
+              <p class="field-error" data-error hidden></p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <button type="button" class="btn btn-outline" data-back>Back</button>
+              <button type="submit" class="btn btn-primary">Send request on WhatsApp</button>
+            </div>
+            <p class="text-sm text-muted">This opens WhatsApp with your request ready to send. Nothing is stored on this website.</p>
+          </fieldset>
+        </form>
+      </div>
+
+      <aside class="space-y-5 lg:sticky lg:top-[calc(var(--header-h)+24px)] lg:self-start">
+        <div class="card p-6">
+          <p class="font-display text-xl font-medium text-ink">What happens next</p>
+          <ol class="mt-5 space-y-4">
+            {[
+              `We reply ${site.responseTime}, day or night.`,
+              'A nurse asks a few questions about the patient and confirms the plan and quote.',
+              'Your nurse, doctor or caregiver arrives at the agreed time.',
+            ].map((t, i) => (
+              <li class="flex gap-3"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-accent font-semibold text-ink">{i + 1}</span><span class="text-ink">{t}</span></li>
+            ))}
+          </ol>
+          <ul class="mt-6 space-y-2 border-t border-line pt-5 text-[0.95rem] text-muted">
+            <li class="flex items-center gap-2"><Icon name="lock" size={16} class="text-primary" />Your details stay private: <a href={href('/legal/privacy-policy')} class="link">privacy</a></li>
+            <li class="flex items-center gap-2"><Icon name="badge-check" size={16} class="text-primary" />Qualified, verified staff</li>
+            <li class="flex items-center gap-2"><Icon name="circle-check" size={16} class="text-primary" />No obligation, clear quote first</li>
+          </ul>
+        </div>
+        <div class="rounded-[var(--radius-card)] bg-night p-6 text-white">
+          <p class="font-semibold">Prefer to talk now?</p>
+          <div class="mt-4 grid gap-3">
+            <a href={waLink("I'd like to book a home visit.", 'WEB-BOOK')} class="btn btn-wa btn-block" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp us</a>
+            <a href={site.phone.href} class="btn btn-light btn-block"><Icon name="phone" size={18} />{site.phone.display}</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .step-ind { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1rem; border-radius: 16px; background: var(--color-sky); color: var(--color-muted); }
+  .step-ind span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; background: white; color: var(--color-muted); font-weight: 700; }
+  .step-ind[aria-current="step"] { background: var(--color-primary-soft); color: var(--color-ink); }
+  .step-ind[aria-current="step"] span { background: var(--color-primary); color: white; }
+  :global(html:not(.js)) .step-ind { display: none; }
+</style>
+
+<script>
+  import '../../scripts/wa-form.ts';
+</script>

@@ -1,0 +1,148 @@
+# FAQ content (docs/02 §12). `id` is the deep-link anchor: /faq/#<id>. `home: true` = shown on the homepage.
+- id: what-is-heaven-nursing-care
+  category: General
+  question: "What is Heaven Nursing Care 24/7?"
+  answer: "We're a home healthcare provider in Lahore. We arrange doctors, qualified nurses, paramedical staff, assistant nurses and caregivers (ayas) to care for patients in their own homes, from a single visit to round-the-clock care."
+  link: { label: "About us", href: "/about" }
+- id: which-areas-do-you-serve
+  category: General
+  question: "Which areas do you serve?"
+  answer: "We care for patients in homes across Lahore, including DHA, Gulberg, Model Town, Johar Town, Bahria Town, Cantt and many more. Our office is at 176-A Pak Arab Society. Not sure if we cover your area? WhatsApp us and we'll confirm."
+  link: { label: "See all areas", href: "/areas-we-serve" }
+- id: are-you-available-24-7
+  category: General
+  home: true
+  question: "Are you available 24/7?"
+  answer: "Yes. Our phone and WhatsApp line is open 24 hours a day, 7 days a week, and we arrange staff for day shifts, night shifts and round-the-clock care. We are not an emergency service, though. In a medical emergency, call Rescue 1122."
+- id: do-you-provide-emergency-care
+  category: General
+  question: "Do you provide emergency care?"
+  answer: "No. In a medical emergency, call Rescue 1122 or go to the nearest hospital emergency department. Once the patient is stable or discharged, we can help with care at home."
+- id: what-services-do-you-provide
+  category: Services
+  question: "What services do you provide at home?"
+  answer: "Doctor home visits; professional nursing; injections and IV medication; BP, sugar and vital signs monitoring; NG tube and feeding care; urinary catheter care; wound and dressing care; elderly and patient care; post-surgery care; paramedical support; and mother and baby care."
+  link: { label: "See all services", href: "/services" }
+- id: can-you-give-injections-and-drips-at-home
+  category: Services
+  question: "Can you give injections and drips at home?"
+  answer: "Yes. Qualified staff give IM, subcutaneous and IV injections, IV fluids and antibiotics at home. This is always done according to a valid prescription, and only where it is clinically appropriate at home."
+  link: { label: "Injections & IV medication", href: "/services/injections-iv-therapy" }
+- id: can-you-insert-ng-tube-or-catheter-at-home
+  category: Services
+  question: "Can you insert or change an NG tube or urinary catheter at home?"
+  answer: "Yes. NG tube insertion and feeding, and catheter insertion, replacement and care, are carried out at home by qualified staff."
+- id: do-you-care-for-bedridden-patients
+  category: Services
+  question: "Do you care for bedridden patients?"
+  answer: "Yes. Caregivers and nurses help with hygiene, feeding, turning and positioning to protect the skin, bed-sore care, and day or night support."
+  link: { label: "Elderly & patient care", href: "/services/elderly-patient-care" }
+- id: can-a-doctor-visit-at-home
+  category: Services
+  question: "Can a doctor visit at home?"
+  answer: "Yes. Doctors visit for check-ups, follow-ups, elderly assessments, chronic disease monitoring and medication reviews, and coordinate with hospitals or specialists when required."
+  link: { label: "Doctor home visits", href: "/services/doctor-home-visit" }
+- id: do-you-offer-mother-and-baby-care
+  category: Services
+  question: "Do you offer mother and baby care?"
+  answer: "Yes. Female nurses, midwives and LHVs provide post-natal care for mothers and newborn care at home, including night support."
+  link: { label: "Mother & baby care", href: "/services/mother-baby-care" }
+- id: do-you-provide-medical-equipment
+  category: Services
+  question: "Do you provide medical equipment, such as hospital beds or oxygen?"
+  answer: "We don't rent equipment ourselves, but we'll advise on exactly what's needed and point you to trusted suppliers in Lahore. Our staff will then set up the care around it."
+- id: are-your-nurses-qualified
+  category: Staff
+  home: true
+  question: "Are your nurses qualified?"
+  answer: "Yes. Clinical procedures are carried out by qualified nurses whose certificates we verify before they join. Assistant nurses and caregivers support routine and personal care."
+  link: { label: "Meet our care team", href: "/about/care-team" }
+- id: nurse-vs-assistant-nurse-vs-caregiver
+  category: Staff
+  question: "What's the difference between a nurse, an assistant nurse and a caregiver (aya)?"
+  answer: "Nurses carry out professional procedures such as injections, dressings, NG tubes and catheters, plus medication and monitoring. Assistant nurses help with nursing tasks and routine care. Caregivers (ayas) help with hygiene, feeding, mobility and daily living. We'll recommend the right role for your loved one."
+- id: can-i-request-a-female-or-male-nurse
+  category: Staff
+  home: true
+  question: "Can I request a female or male nurse or caregiver?"
+  answer: "Yes. Tell us your preference when you book and we'll match accordingly. Mother and baby care is always provided by female staff."
+- id: how-do-you-check-your-staff
+  category: Staff
+  question: "How do you check your staff?"
+  answer: "Every staff member is interviewed, and we verify their CNIC, qualifications and references before they join. Clinical staff are assessed on the procedures they'll perform."
+  link: { label: "Quality & safety", href: "/about/quality-and-safety" }
+- id: what-if-we-are-not-comfortable-with-the-staff
+  category: Staff
+  question: "What if we're not comfortable with the staff member?"
+  answer: "Tell us. We'll listen, and if needed we'll arrange a replacement, usually within 24 hours. Your family's comfort matters."
+- id: can-staff-stay-overnight
+  category: Staff
+  question: "Can staff stay overnight or live in?"
+  answer: "Yes. We offer night shifts, 24-hour care with two staff on rotating 12-hour shifts, and live-in caregivers. We'll help you choose what suits your home."
+  link: { label: "Care plans", href: "/care-plans" }
+- id: how-do-i-book
+  category: Booking & scheduling
+  question: "How do I book?"
+  answer: "WhatsApp or call 0308 2177778 any time, or use our online booking form. We'll ask a few questions about the patient and confirm the details."
+  link: { label: "Book a home visit", href: "/book-a-visit" }
+- id: how-quickly-can-care-start
+  category: Booking & scheduling
+  home: true
+  question: "How quickly can care start?"
+  answer: "Single visits such as injections, dressings or a doctor's check-up can often be arranged the same day. Shift-based nursing or caregiving usually starts within 24 hours of the assessment."
+- id: do-i-need-a-prescription
+  category: Booking & scheduling
+  question: "Do I need a prescription or a doctor's referral?"
+  answer: "For injections, IV medication and some procedures, yes: a valid prescription is required. Personal care and monitoring don't need a referral."
+- id: can-i-book-a-single-visit
+  category: Booking & scheduling
+  question: "Can I book a single visit?"
+  answer: "Yes. Many services, such as injections, dressing changes, catheter changes and doctor visits, can be booked as a single visit."
+  link: { label: "See care plans", href: "/care-plans" }
+- id: how-is-the-cost-worked-out
+  category: Booking & scheduling
+  home: true
+  question: "How is the cost of care worked out?"
+  answer: "It depends on the type of professional, the services needed and the hours of care. Once we understand the patient's needs, we'll give you a clear quote before care begins, with no hidden charges."
+- id: how-can-i-pay
+  category: Booking & scheduling
+  question: "How can I pay?"
+  answer: "Cash, bank transfer, JazzCash or Easypaisa. Families abroad can pay by international bank transfer."
+- id: can-i-change-or-cancel-care
+  category: Booking & scheduling
+  question: "Can I change, pause or cancel care?"
+  answer: "Yes. Plans can change as needs change. For shift-based care, please give us 24 hours' notice where possible."
+- id: how-will-we-be-kept-informed
+  category: Family & communication
+  question: "How will our family be kept informed?"
+  answer: "Your nurse or caregiver shares a short daily update on WhatsApp, covering vital signs, medicines given, meals and anything to watch. You can call our coordinator at any time."
+- id: can-you-coordinate-with-our-doctor
+  category: Family & communication
+  question: "Can you coordinate with our doctor or hospital?"
+  answer: "Yes. We coordinate with hospitals and specialists when required and follow the treating doctor's instructions."
+- id: is-our-information-kept-private
+  category: Privacy & safety
+  question: "Is our information kept private?"
+  answer: "Yes. We share patient information only with the staff involved in their care and as described in our Privacy Policy."
+  link: { label: "Privacy Policy", href: "/legal/privacy-policy" }
+- id: what-if-the-patients-condition-gets-worse
+  category: Privacy & safety
+  question: "What happens if the patient's condition gets worse during care?"
+  answer: "Our staff inform the family and the treating doctor straight away. In an emergency, they call Rescue 1122 and stay with the patient until help arrives."
+- id: can-i-arrange-care-from-abroad
+  category: Families abroad
+  question: "I live abroad. Can I arrange care for my parents in Lahore?"
+  answer: "Yes. Many families arrange care from overseas. WhatsApp us on +92 308 2177778. We'll handle the assessment in Lahore and keep you updated throughout."
+  link: { label: "Care from abroad", href: "/who-we-care-for/overseas-families" }
+- id: can-i-pay-from-abroad
+  category: Families abroad
+  question: "Can I pay from abroad?"
+  answer: "Yes. International bank transfer works well, or a family member in Pakistan can pay locally."
+- id: can-i-get-updates-in-my-time-zone
+  category: Families abroad
+  question: "Can I get updates in my time zone?"
+  answer: "Yes. Tell us when suits you and we'll schedule WhatsApp updates or video calls with your parent around your time zone."
+- id: who-will-be-at-the-first-visit
+  category: Families abroad
+  question: "Who will be with my parent at the first visit if I'm abroad?"
+  answer: "We recommend a relative or trusted neighbour is present. We'll also call or video call you during the visit so you can meet the carer and ask questions."
