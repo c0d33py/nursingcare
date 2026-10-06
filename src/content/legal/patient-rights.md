@@ -27,7 +27,7 @@ We believe good care is built on respect, on both sides. This page sets out what
 
 ## Raising a concern
 
-1. Speak to your nurse or caregiver, or call or WhatsApp our coordinator on 0308 2177778.
+1. Speak to your nurse or caregiver, or call or WhatsApp our coordinator on 0324 4744447.
 2. We'll acknowledge your concern within 24 hours and agree how to resolve it.
 3. If you're not satisfied, ask for the matter to be reviewed by our clinical lead.
 

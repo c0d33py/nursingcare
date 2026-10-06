@@ -35,7 +35,7 @@ Requires Node 22.12+.
 
 ## How the forms work (no server needed)
 
-GitHub Pages can't run server code, so the booking, contact and partner forms **validate in the browser, then open WhatsApp with a prefilled, structured message** (e.g. `[Ref: WEB-BOOK]`) to 0308 2177778 and show the thank-you page. Nothing is stored on the site. Logic: [`src/scripts/wa-form.ts`](src/scripts/wa-form.ts).
+GitHub Pages can't run server code, so the booking, contact and partner forms **validate in the browser, then open WhatsApp with a prefilled, structured message** (e.g. `[Ref: WEB-BOOK]`) to 0324 4744447 and show the thank-you page. Nothing is stored on the site. Logic: [`src/scripts/wa-form.ts`](src/scripts/wa-form.ts).
 If email delivery is wanted later, point the forms at a form service (Web3Forms/Formspree) — no CRM is integrated, by design.
 
 ## Where to edit things

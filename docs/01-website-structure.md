@@ -143,7 +143,7 @@ The designer builds **8 templates**, not 30 pages. Each page below names its tem
 ### 6.1 Desktop header (≥ 1024px)
 
 ```
-[Logo]   Services ▾   Care Plans   Who We Care For ▾   About ▾   Contact        ☎ 0308 2177778   [WhatsApp]   [Book a home visit]
+[Logo]   Services ▾   Care Plans   Who We Care For ▾   About ▾   Contact        ☎ 0324 4744447   [WhatsApp]   [Book a home visit]
 ```
 
 - **Sticky.** Shrinks from 80px to 64px after 80px of scroll (M04). Solid white background with a subtle blur once scrolled.
@@ -200,7 +200,7 @@ Bottom-right. Appears after 30% scroll (M08). Tooltip: "Chat with us on WhatsApp
 └──────────────────────────────────────────────────────────────────────────────────┘
 ┌ Brand ───────────────┬ Services ─────────┬ Company ───────────┬ Help ──────────┬ Contact ─────────────┐
 │ Logo                 │ 11 service links  │ About us           │ FAQ            │ ☎/WhatsApp           │
-│ Tagline              │ Care plans        │ Our care team      │ Who we care for│  0308 2177778 (24/7) │
+│ Tagline              │ Care plans        │ Our care team      │ Who we care for│  0324 4744447 (24/7) │
 │ 2-line description   │                   │ Quality & safety   │ Overseas       │ 176-A Pak Arab       │
 │ Social: FB · IG ·    │                   │ How it works       │  families      │  Society, Lahore     │
 │ Google reviews       │                   │ Areas we serve     │ Book a visit   │  → Get directions    │
@@ -225,7 +225,7 @@ On every page except P01, P15, P16 and P22. Format: `Home › Services › Wound
 |---|---|---|---|---|
 | Default | Most pages | Book a home visit | WhatsApp us | Call number |
 | Service | S01–S11 | Book {service} | Ask about {service} on WhatsApp (prefilled) | Call |
-| Overseas | P10 | WhatsApp us (international format +92 308 2177778) | Request a call back | — |
+| Overseas | P10 | WhatsApp us (international format +92 324 4744447) | Request a call back | — |
 | Partner | P11 | Refer a patient | Partner enquiry form | Call |
 
 ### 6.8 Trust strip (reusable)
@@ -257,14 +257,14 @@ Only if non-essential cookies or trackers are used (GA4 or Meta Pixel for ads, s
 | **Purpose** | In about 10 seconds, establish what the business does (doctors, nurses and caregivers at home), where (Lahore), when (24/7) and why it can be trusted. Then route each visitor to the right service or straight to contact. |
 | **Target audience** | All, with A1 and A2 first |
 | **Primary CTA** | Book a home visit → P15 |
-| **Secondary CTA** | WhatsApp us (prefilled, ref `WEB`) · Call 0308 2177778 |
+| **Secondary CTA** | WhatsApp us (prefilled, ref `WEB`) · Call 0324 4744447 |
 | **Conversion goals** | Lead rate ≥ [baseline after 4 weeks]; ≥ 40% of visitors reach a service page, the Care Finder or a contact action |
 
 **Content sections & layout**
 
 | # | Section | Content | Layout (desktop → mobile) |
 |---|---|---|---|
-| 1 | **Hero** | Eyebrow "Home nursing & healthcare · Lahore · 24/7"; H1; subhead; Book + WhatsApp buttons; "or call 0308 2177778"; three-item proof row | 12-column grid: text 6 columns on the left, arch-shaped media 6 columns on the right (M20) with two floating "vitals" chips (M21). Soft "dawn sky" background (M22). **Mobile:** text, then buttons, then a short arch image (40vh); the proof row scrolls horizontally |
+| 1 | **Hero** | Eyebrow "Home nursing & healthcare · Lahore · 24/7"; H1; subhead; Book + WhatsApp buttons; "or call 0324 4744447"; three-item proof row | 12-column grid: text 6 columns on the left, arch-shaped media 6 columns on the right (M20) with two floating "vitals" chips (M21). Soft "dawn sky" background (M22). **Mobile:** text, then buttons, then a short arch image (40vh); the proof row scrolls horizontally |
 | 2 | **Trust strip** | §6.8 | Full-width band directly under the hero |
 | 3 | **Services overview** | H2 + intro; filter chips (All · Medical · Nursing procedures · Daily & recovery care); 11 service cards (3D icon, name, one line, link); "Explore all services" | 4-column card grid (3 at 1024px). **Mobile:** 2-column compact cards, chips scroll horizontally |
 | 4 | **Who we care for** | 6 situation tiles: Elderly parents, Bedridden patients, After surgery, Chronic conditions, Mothers & newborns, Families abroad | 3×2 image tiles with overlaid titles. **Mobile:** horizontal scroll-snap, 85% card width so the next card peeks |
@@ -591,7 +591,7 @@ Only if non-essential cookies or trackers are used (GA4 or Meta Pixel for ads, s
 
 **Required media:** video-call photo, chat mock-up (HTML), optional world-to-Lahore line illustration.
 **Internal linking:** S08, S02, S01, P04, P05, P13.
-**SEO considerations:** keywords: *care for elderly parents in Pakistan from abroad*, *home nursing Lahore for overseas Pakistanis*. Show the phone number as **+92 308 2177778** on this page. Schema: `WebPage`. If ads need a stripped-down variant, create `/lp/overseas` with `noindex` (Phase 2).
+**SEO considerations:** keywords: *care for elderly parents in Pakistan from abroad*, *home nursing Lahore for overseas Pakistanis*. Show the phone number as **+92 324 4744447** on this page. Schema: `WebPage`. If ads need a stripped-down variant, create `/lp/overseas` with `noindex` (Phase 2).
 
 ---
 
@@ -679,7 +679,7 @@ Only if non-essential cookies or trackers are used (GA4 or Meta Pixel for ads, s
 |---|---|
 | **Purpose** | Every contact method, the address and hours. General enquiries. |
 | **Target audience** | All, including partners and suppliers |
-| **Primary CTA** | Call / WhatsApp 0308 2177778 |
+| **Primary CTA** | Call / WhatsApp 0324 4744447 |
 | **Secondary CTA** | General enquiry form · Get directions |
 | **Conversion goals** | Contact actions; route care requests to P15 |
 
@@ -840,7 +840,7 @@ Three questions. Answers map to services and a plan by simple rules, with no sco
 
 ### 8.5 WhatsApp deep links & lead attribution
 
-- Format: `https://wa.me/923082177778?text={url-encoded message}`. Calls use `tel:+923082177778`.
+- Format: `https://wa.me/923244744447?text={url-encoded message}`. Calls use `tel:+923244744447`.
 - Every WhatsApp link carries a page reference code (`[Ref: WEB-WOUND]`). Staff log the code in the lead log, which gives source attribution for WhatsApp leads at no cost. Codes and messages: doc 02 §11.3.
 - Analytics events fire on click (doc 04 §7).
 
@@ -916,7 +916,7 @@ Three questions. Answers map to services and a plan by simple rules, with no sco
 
 | Template / page | Schema types |
 |---|---|
-| Sitewide (in layout, once) | `MedicalBusiness` (name, url, logo, telephone `+92-308-2177778`, PostalAddress `176-A Pak Arab Society, Lahore, Punjab, PK`, geo [CONFIRM coordinates], 24/7 `openingHoursSpecification`, `areaServed`, `sameAs`) + `WebSite` |
+| Sitewide (in layout, once) | `MedicalBusiness` (name, url, logo, telephone `+92-324-4744447`, PostalAddress `176-A Pak Arab Society, Lahore, Punjab, PK`, geo [CONFIRM coordinates], 24/7 `openingHoursSpecification`, `areaServed`, `sameAs`) + `WebSite` |
 | T4 Service | `Service` + `MedicalWebPage` (`reviewedBy`, `lastReviewed`) + `BreadcrumbList` + `FAQPage` |
 | T3 Hub | `CollectionPage` + `ItemList` + `BreadcrumbList` |
 | P13 | `FAQPage` |

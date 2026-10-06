@@ -9,7 +9,7 @@ Heaven Nursing Care 24/7 ("we", "us") provides home nursing and healthcare servi
 
 ## Who we are
 
-Heaven Nursing Care 24/7, 176-A Pak Arab Society, Lahore. Phone and WhatsApp: 0308 2177778.
+Heaven Nursing Care 24/7, 176-A Pak Arab Society, Lahore. Phone and WhatsApp: 0324 4744447.
 
 ## What we collect
 
@@ -41,7 +41,7 @@ Enquiries that don't lead to care are deleted within 12 months. Care records are
 
 ## Your rights
 
-You can ask to see, correct or delete the information we hold about you, or withdraw consent for us to contact you. Call or WhatsApp us on 0308 2177778.
+You can ask to see, correct or delete the information we hold about you, or withdraw consent for us to contact you. Call or WhatsApp us on 0324 4744447.
 
 ## Cookies
 

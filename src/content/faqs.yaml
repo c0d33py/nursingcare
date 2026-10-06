@@ -83,7 +83,7 @@
 - id: how-do-i-book
   category: Booking & scheduling
   question: "How do I book?"
-  answer: "WhatsApp or call 0308 2177778 any time, or use our online booking form. We'll ask a few questions about the patient and confirm the details."
+  answer: "WhatsApp or call 0324 4744447 any time, or use our online booking form. We'll ask a few questions about the patient and confirm the details."
   link: { label: "Book a home visit", href: "/book-a-visit" }
 - id: how-quickly-can-care-start
   category: Booking & scheduling
@@ -132,7 +132,7 @@
 - id: can-i-arrange-care-from-abroad
   category: Families abroad
   question: "I live abroad. Can I arrange care for my parents in Lahore?"
-  answer: "Yes. Many families arrange care from overseas. WhatsApp us on +92 308 2177778. We'll handle the assessment in Lahore and keep you updated throughout."
+  answer: "Yes. Many families arrange care from overseas. WhatsApp us on +92 324 4744447. We'll handle the assessment in Lahore and keep you updated throughout."
   link: { label: "Care from abroad", href: "/who-we-care-for/overseas-families" }
 - id: can-i-pay-from-abroad
   category: Families abroad

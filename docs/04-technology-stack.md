@@ -304,7 +304,7 @@ Content: Markdown/YAML in Git (Astro content collections) → build → deploy o
 ### 3.18 Contact & CRM integrations
 | Tool | Why / used for | Advantages | Drawbacks | Perf | Cost | Alternative |
 |---|---|---|---|---|---|---|
-| **`wa.me` deep links** | WhatsApp is the primary channel: `https://wa.me/923082177778?text=…` with page reference codes (doc 02 §11.3) | Zero code, zero weight; attribution via the ref code | Attribution relies on staff logging the ref code | None | Free | — |
+| **`wa.me` deep links** | WhatsApp is the primary channel: `https://wa.me/923244744447?text=…` with page reference codes (doc 02 §11.3) | Zero code, zero weight; attribution via the ref code | Attribution relies on staff logging the ref code | None | Free | — |
 | **WhatsApp Business App** (on the business phone) | Where conversations happen: greeting and away messages, quick replies, labels (New lead / Assessed / Active / Closed) as a lightweight CRM, service catalogue | Familiar; free; works today | Manual; one device plus linked devices | — | Free | WhatsApp Business Platform (below) |
 | **`tel:` links** | Calls | Native | — | None | Free | — |
 | **Resend** (transactional email) | Delivers form leads to the operations inbox; HTML-escaped content | Simple API; good deliverability with SPF/DKIM/DMARC on the domain | Another account to manage | Server-side only | Free tier (~3,000 emails/month) | **Postmark**, **Brevo**; Cloudflare's Worker email sending if Email Routing handles the domain's mail |
@@ -365,7 +365,7 @@ Content: Markdown/YAML in Git (Astro content collections) → build → deploy o
   "name": "Heaven Nursing Care 24/7",
   "url": "https://[domain]/",
   "logo": "https://[domain]/logo.png",
-  "telephone": "+92-308-2177778",
+  "telephone": "+92-324-4744447",
   "address": { "@type": "PostalAddress", "streetAddress": "176-A Pak Arab Society",
                "addressLocality": "Lahore", "addressRegion": "Punjab", "addressCountry": "PK" },
   "openingHoursSpecification": { "@type": "OpeningHoursSpecification",

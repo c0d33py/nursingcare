@@ -15,8 +15,8 @@ export const site = {
   blurb:
     'Heaven Nursing Care 24/7 provides doctors, qualified nurses, paramedical staff and caregivers for patients at home across Lahore.',
 
-  phone: { display: '0308 2177778', intl: '+92 308 2177778', href: 'tel:+923082177778', schema: '+92-308-2177778' },
-  whatsapp: '923082177778',
+  phone: { display: '0324 4744447', intl: '+92 324 4744447', href: 'tel:+923244744447', schema: '+92-324-4744447' },
+  whatsapp: '923244744447',
   email: '', // SAMPLE: add a domain email (e.g. care@yourdomain.pk) — hidden everywhere while empty
   address: {
     street: '176-A Pak Arab Society',

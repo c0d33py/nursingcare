@@ -71,7 +71,7 @@ Every page should express at least two pillars. Each pillar needs **proof** befo
 4. **Second person ("you", "your loved one") and first-person plural ("we").** Active voice.
 5. **Sentence case** for all headings and buttons ("Book a home visit"). The brand name keeps its own capitals. Never use ALL CAPS in body text.
 6. **British English spelling** (colour, centre, programme), consistent with Pakistani usage. "-ize" endings are acceptable to match the source (Oxford style), but be consistent within a page.
-7. **Numbers:** numerals for all numbers ("3 steps", "24/7"). Times as "8 am–8 pm". Phone as **0308 2177778** for local readers and **+92 308 2177778** on the overseas page and in the schema.
+7. **Numbers:** numerals for all numbers ("3 steps", "24/7"). Times as "8 am–8 pm". Phone as **0324 4744447** for local readers and **+92 324 4744447** on the overseas page and in the schema.
 8. **"24/7" always says what is available 24/7** ("Our phone and WhatsApp line is open 24/7"). Never let it imply emergency response.
 9. **One idea per heading.** Headings should make sense when read on their own (screen readers and skimmers).
 10. **No unverifiable superlatives.** Prefer specifics: "qualified nurses for IV medication" over "expert medical care".
@@ -112,7 +112,7 @@ Each block below is one section in doc 01 §7.1. **H1 option A is recommended.**
 - **Subheadline:** Heaven Nursing Care 24/7 brings doctors, qualified nurses and trained caregivers to your home in Lahore — for elderly parents, recovery after surgery and long-term care. Tell us what your loved one needs and we'll arrange the right professional.
 - **Primary button:** Book a home visit
 - **Secondary button:** WhatsApp us
-- **Text link:** or call 0308 2177778
+- **Text link:** or call 0324 4744447
 - **Proof row:** Doctors, nurses & caregivers · Day, night & 24-hour care · Families kept informed
 - **Floating chips (illustrative, labelled "Example"):** "BP 120/80 · Normal" · "SpO₂ 98%" · "Nurse arrived · 9:00 am ✓"
 
@@ -207,7 +207,7 @@ Qualified nurses & doctors [CONFIRM registration wording] · 24/7 phone & WhatsA
 ### 3.14 Final CTA band
 - **H2:** Let's talk about the care your loved one needs.
 - **Body:** Our phone and WhatsApp line is open 24/7. Tell us what's needed and we'll take it from there.
-- **Buttons:** Book a home visit · WhatsApp us · Call 0308 2177778
+- **Buttons:** Book a home visit · WhatsApp us · Call 0324 4744447
 - **Small print:** Not an emergency service. In a medical emergency, call Rescue 1122.
 
 ---
@@ -488,7 +488,7 @@ The source has **no statistics**. Publish only numbers with a documented source.
 |---|---|---|---|
 | C1 | **Book a home visit** | Primary, sitewide | `/book-a-visit` |
 | C2 | **WhatsApp us** | Secondary, sitewide | `wa.me` + prefill (§11.3) |
-| C3 | **Call 0308 2177778** | Tertiary; "Call" in the mobile bar | `tel:+923082177778` |
+| C3 | **Call 0324 4744447** | Tertiary; "Call" in the mobile bar | `tel:+923244744447` |
 | C4 | **Find the right care** | Care Finder entry | `/#care-finder` |
 | C5 | **Explore all services** | P01 → P06 | `/services` |
 | C6 | **See care plans** | → P08 | `/care-plans` |
@@ -548,13 +548,13 @@ Mobile action bar labels: **Call · WhatsApp · Book visit**.
   - "Please confirm we can contact you about this request."
 - **Error summary heading:** "Please check {N} things before sending:"
 - **Pending button:** "Sending…"
-- **Network failure:** "Something went wrong sending your request. Please try again, or WhatsApp us on 0308 2177778. We're available 24/7."
+- **Network failure:** "Something went wrong sending your request. Please try again, or WhatsApp us on 0324 4744447. We're available 24/7."
 
 ### 11.5 Utility page copy
 - **P16 Thank you:**
   - H1 and subhead as in §4.
   - "**While you wait:** have the patient's prescriptions, any discharge summary and a list of current medicines to hand."
-  - Buttons: WhatsApp us now · Call 0308 2177778
+  - Buttons: WhatsApp us now · Call 0324 4744447
   - Sign-off: "Your Health. Our Priority."
 - **P22 404:** H1 and subhead as in §4. Links: Our services · Book a home visit · Contact us · WhatsApp us.
 
@@ -617,7 +617,7 @@ Mobile action bar labels: **Call · WhatsApp · Book visit**.
 
 ### Booking & scheduling
 19. **How do I book?** `how-do-i-book`
-    WhatsApp or call 0308 2177778 any time, or use our online booking form. We'll ask a few questions and confirm the details.
+    WhatsApp or call 0324 4744447 any time, or use our online booking form. We'll ask a few questions and confirm the details.
 20. ★ **How quickly can care start?** `how-quickly-can-care-start`
     [CONFIRM typical lead time. Say "often the same day" only if that's true.]
 21. **Do I need a prescription or a doctor's referral?** `do-i-need-a-prescription`
@@ -645,7 +645,7 @@ Mobile action bar labels: **Call · WhatsApp · Book visit**.
 
 ### Families abroad
 30. **I live abroad. Can I arrange care for my parents in Lahore?** `can-i-arrange-care-from-abroad`
-    Yes. Many families arrange care from overseas. WhatsApp us on +92 308 2177778, and we'll handle the assessment and keep you updated [CONFIRM].
+    Yes. Many families arrange care from overseas. WhatsApp us on +92 324 4744447, and we'll handle the assessment and keep you updated [CONFIRM].
 31. **Can I pay from abroad?** `can-i-pay-from-abroad`
     [CONFIRM methods]
 32. **Can I get updates in my time zone?** `can-i-get-updates-in-my-time-zone`
@@ -684,7 +684,7 @@ Mobile action bar labels: **Call · WhatsApp · Book visit**.
 | P11 | Refer Patients for Home Care in Lahore \| Heaven Nursing Care | Partner with us for safe discharge home: nursing, wound, NG tube and catheter care, IV therapy and monitoring for your patients in Lahore. |
 | P12 | Areas We Serve in Lahore \| Heaven Nursing Care | Home nursing and healthcare across Lahore: DHA, Gulberg, Johar Town, Model Town, Bahria Town and more [CONFIRM]. Check your area. |
 | P13 | Home Nursing FAQs \| Heaven Nursing Care 24/7 | Answers to common questions about home nursing in Lahore: staff, services, booking, shifts, safety, privacy and arranging care from abroad. |
-| P14 | Contact Us \| Heaven Nursing Care 24/7, Lahore | Call or WhatsApp 0308 2177778, 24/7, or visit us at 176-A Pak Arab Society, Lahore. We're here to help arrange care at home. |
+| P14 | Contact Us \| Heaven Nursing Care 24/7, Lahore | Call or WhatsApp 0324 4744447, 24/7, or visit us at 176-A Pak Arab Society, Lahore. We're here to help arrange care at home. |
 | P15 | Book a Home Visit \| Heaven Nursing Care 24/7 | Tell us what your loved one needs and we'll call you back to arrange the right professional at home in Lahore. |
 | P16 | Thank You \| Heaven Nursing Care (noindex) | — |
 | P17–P21 | {Page name} \| Heaven Nursing Care | One plain sentence describing the policy. |

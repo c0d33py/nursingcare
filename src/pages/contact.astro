@@ -14,7 +14,7 @@ const cards = [
 const schema = [{ '@type': 'ContactPage', name: 'Contact Heaven Nursing Care 24/7', url: new URL(href('/contact'), Astro.site).href }];
 ---
 
-<Base title="Contact Us | Heaven Nursing Care 24/7, Lahore" description="Call or WhatsApp 0308 2177778, 24/7, or visit us at 176-A Pak Arab Society, Lahore. We're here to help arrange care at home." schema={schema}>
+<Base title="Contact Us | Heaven Nursing Care 24/7, Lahore" description={`Call or WhatsApp ${site.phone.display}, 24/7, or visit us at ${site.address.full}. We're here to help arrange care at home.`} schema={schema}>
   <PageHero eyebrow="Contact" title="We're here, day and night" subtitle="Call or WhatsApp us 24/7, send a message, or visit our office in Lahore." crumbs={[{ label: 'Contact' }]} />
 
   <section class="section pb-10">
