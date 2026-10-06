@@ -64,17 +64,6 @@ if (fab) {
   onScroll();
 }
 
-/* M13 copy phone number */
-for (const btn of $$<HTMLButtonElement>('[data-copy]')) {
-  btn.addEventListener('click', async () => {
-    const tip = btn.querySelector('.copy-tip');
-    try {
-      await navigator.clipboard.writeText(btn.dataset.copy ?? '');
-      if (tip) { tip.textContent = 'Copied'; setTimeout(() => (tip.textContent = ''), 1500); }
-    } catch { /* clipboard unavailable — number is visible anyway */ }
-  });
-}
-
 /* Filter chips (services grids): [data-filter-group="<list id>"] > [data-filter] */
 for (const group of $$('[data-filter-group]')) {
   const list = document.getElementById(group.dataset.filterGroup ?? '');

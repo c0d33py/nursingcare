@@ -37,7 +37,7 @@ const hideBook = path.startsWith(href('/book-a-visit'));
 <div id="top-sentinel" class="pointer-events-none absolute top-0 left-0 h-2 w-px" aria-hidden="true"></div>
 
 <header class="site-header sticky top-0 z-50" data-header>
-  <div class="container-x flex h-[var(--header-h)] items-center gap-4 lg:gap-6">
+  <div class="container-x flex h-[var(--header-h)] items-center gap-4 xl:gap-6">
     <a href={href('/')} class="shrink-0 rounded-lg" aria-label={`${site.name} — home`}>
       <Logo class="header-logo" />
     </a>
@@ -107,17 +107,11 @@ const hideBook = path.startsWith(href('/book-a-visit'));
     </nav>
 
     <div class="ml-auto flex items-center gap-2">
-      <div class="hidden items-center gap-1 2xl:flex">
-        <a href={site.phone.href} class="flex items-center gap-2 rounded-full px-3 py-2 font-semibold text-ink hover:text-primary" data-umami-event="call_click" data-umami-event-placement="header">
-          <Icon name="phone" size={18} class="text-primary" />{site.phone.display}
-        </a>
-        <button type="button" class="copy-btn" data-copy={site.phone.display} aria-label="Copy phone number">
-          <Icon name="copy" size={16} />
-          <span class="copy-tip" role="status" aria-live="polite"></span>
-        </button>
-      </div>
-      <a href={waLink()} class="btn btn-outline btn-sm hidden lg:inline-flex" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="header">
-        <Icon name="message-circle" size={18} /><span class="sr-only 2xl:not-sr-only">WhatsApp</span>
+      <a href={site.phone.href} class="hidden shrink-0 items-center gap-2 rounded-full px-2 py-2 font-semibold whitespace-nowrap text-ink hover:text-primary 2xl:flex" data-umami-event="call_click" data-umami-event-placement="header">
+        <Icon name="phone" size={18} class="text-primary" />{site.phone.display}
+      </a>
+      <a href={waLink()} class="btn btn-outline btn-sm hidden xl:inline-flex" title="WhatsApp us" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="header">
+        <Icon name="message-circle" size={18} /><span class="sr-only">WhatsApp</span>
       </a>
       {!hideBook && <a href={href('/book-a-visit')} class="btn btn-primary btn-sm hidden lg:inline-flex">Book a home visit</a>}
 
@@ -192,12 +186,12 @@ const hideBook = path.startsWith(href('/book-a-visit'));
   .nav-link {
     position: relative;
     display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap;
-    min-height: 44px; padding: 0 0.8rem;
+    min-height: 44px; padding: 0 0.6rem;
     font-weight: 600; font-size: 1rem; color: var(--color-ink);
     border-radius: 999px; cursor: pointer;
   }
   .nav-link::after {
-    content: ""; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 6px; height: 2px;
+    content: ""; position: absolute; left: 0.6rem; right: 0.6rem; bottom: 6px; height: 2px;
     background: var(--color-accent); transform: scaleX(0); transform-origin: left;
     transition: transform 240ms var(--ease-out);
   }
@@ -224,15 +218,6 @@ const hideBook = path.startsWith(href('/book-a-visit'));
   .drop-list { background: white; border: 1px solid var(--color-line); border-radius: 20px; padding: 0.5rem; box-shadow: var(--shadow-lift); }
   .drop-link { display: block; padding: 0.65rem 0.9rem; border-radius: 12px; font-weight: 500; color: var(--color-ink); }
   .drop-link:hover, .drop-link[aria-current="page"] { background: var(--color-sky); color: var(--color-primary-strong); }
-
-  .copy-btn { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; color: var(--color-muted); }
-  .copy-btn:hover { background: var(--color-sky); color: var(--color-primary); }
-  .copy-tip {
-    position: absolute; top: calc(100% + 6px); left: 50%; translate: -50% 4px; white-space: nowrap;
-    background: var(--color-ink); color: white; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.6rem; border-radius: 8px;
-    opacity: 0; pointer-events: none; transition: opacity 200ms, translate 200ms var(--ease-out);
-  }
-  .copy-tip:not(:empty) { opacity: 1; translate: -50% 0; }
 
   dialog.mobile-menu {
     margin: 0 0 0 auto; padding: 0; border: 0; width: min(100%, 420px); max-width: 100%;

@@ -22,5 +22,6 @@ export function iconSvg(name: string, { size = 24, className = '', label = '' } 
   const w = icon.width ?? set.width ?? 24;
   const h = icon.height ?? set.height ?? 24;
   const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${size}" height="${size}" class="${className}" ${a11y}>${icon.body}</svg>`;
+  // shrink-0: icons sit in flex rows and must never be squeezed by long labels.
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${size}" height="${size}" class="shrink-0 ${className}" ${a11y}>${icon.body}</svg>`;
 }
