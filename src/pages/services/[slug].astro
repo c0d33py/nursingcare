@@ -69,7 +69,7 @@ const schema = [
         <p class="lead mt-5 max-w-2xl">{data.subhead}</p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
           <a href={bookUrl} class="btn btn-primary">Book {lcFirst(data.title)}<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
-          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="service"><Icon name="message-circle" size={20} />Ask on WhatsApp</a>
+          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="service"><Icon name="message-circle" size={18} />Ask on WhatsApp</a>
         </div>
         <ul class="mt-8 flex flex-wrap gap-2">
           <li class="chip"><Icon name="user-round" size={16} class="text-primary" /><span><span class="text-muted">Provided by:</span> {data.providedBy.join(', ')}</span></li>
@@ -154,7 +154,7 @@ const schema = [
           <p class="mt-2 text-muted">Tell us what's needed and we'll confirm a time, usually the same or next day.</p>
           <div class="mt-5 space-y-3">
             <a href={bookUrl} class="btn btn-primary btn-block">Book a home visit</a>
-            <a href={wa} class="btn btn-wa btn-block" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp us</a>
+            <a href={wa} class="btn btn-wa btn-block" target="_blank" rel="noopener"><Icon name="message-circle" size={18} />WhatsApp us</a>
             <a href={site.phone.href} class="btn btn-outline btn-block"><Icon name="phone" size={18} />{site.phone.display}</a>
           </div>
           <dl class="mt-6 space-y-3 border-t border-line pt-5 text-[0.98rem]">

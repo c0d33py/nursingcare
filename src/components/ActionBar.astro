@@ -26,7 +26,7 @@ const onHome = path === href('/');
 
 {!onBook && (
   <a href={waLink()} class="wa-float hidden lg:flex" target="_blank" rel="noopener" data-wa-float data-umami-event="whatsapp_click" data-umami-event-placement="floating" aria-label="Chat with us on WhatsApp, available 24/7">
-    <Icon name="message-circle" size={28} />
+    <Icon name="message-circle" size={24} />
     <span class="wa-tip" aria-hidden="true">Chat with us on WhatsApp — 24/7</span>
   </a>
 )}
@@ -45,8 +45,8 @@ const onHome = path === href('/');
   /* Compact pills, icon beside label; one clear primary (Book), WhatsApp secondary, Call quiet. */
   .action-bar a {
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    height: 48px; padding: 0 14px; border-radius: 14px;
-    font-size: 0.95rem; font-weight: 600; line-height: 1; white-space: nowrap;
+    height: 44px; padding: 0 14px; border-radius: 12px;
+    font-size: 0.9286rem; font-weight: 600; line-height: 1; white-space: nowrap;
     transition: transform 120ms var(--ease-out);
   }
   .action-bar a:active { transform: scale(0.97); }
@@ -61,8 +61,8 @@ const onHome = path === href('/');
   :global(html.js) .action-bar[data-wait-hero]:not(.is-shown) { translate: 0 110%; }
 
   .wa-float {
-    position: fixed; right: 28px; bottom: 28px; z-index: 40;
-    width: 60px; height: 60px; border-radius: 999px; align-items: center; justify-content: center;
+    position: fixed; right: 24px; bottom: 24px; z-index: 40;
+    width: 52px; height: 52px; border-radius: 999px; align-items: center; justify-content: center;
     background: var(--color-wa); color: white; box-shadow: 0 12px 32px rgb(7 94 84 / 0.4);
     transition: scale 300ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms;
   }
@@ -75,7 +75,7 @@ const onHome = path === href('/');
   @keyframes wa-ping { from { opacity: 0.8; scale: 1; } to { opacity: 0; scale: 1.6; } }
   .wa-tip {
     position: absolute; right: calc(100% + 12px); white-space: nowrap; padding: 0.5rem 0.85rem; border-radius: 12px;
-    background: var(--color-ink); color: white; font-size: 0.9rem; font-weight: 600;
+    background: var(--color-ink); color: white; font-size: 0.9286rem; font-weight: 600;
     opacity: 0; translate: 6px 0; pointer-events: none; transition: opacity 200ms, translate 200ms var(--ease-out);
   }
   .wa-float:hover .wa-tip, .wa-float:focus-visible .wa-tip { opacity: 1; translate: 0 0; }

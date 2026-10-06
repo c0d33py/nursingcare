@@ -28,10 +28,10 @@ const msgs = short ? all.filter((m) => !m.full) : all;
       {msgs.map((m) => (
         <li class="chat-msg" data-msg>
           <p>{m.text}</p>
-          <time class="mt-1 block text-right text-[0.72rem] text-muted">{m.t}</time>
+          <time class="mt-1 block text-right text-[0.8rem] text-muted">{m.t}</time>
         </li>
       ))}
-      <li class="chat-msg chat-me" data-msg><p>Thank you so much! 🙏</p><time class="mt-1 block text-right text-[0.72rem] text-white/70">9:12 pm</time></li>
+      <li class="chat-msg chat-me" data-msg><p>Thank you so much! 🙏</p><time class="mt-1 block text-right text-[0.8rem] text-white/70">9:12 pm</time></li>
       <li class="chat-typing" data-typing hidden aria-hidden="true"><span></span><span></span><span></span></li>
     </ol>
   </div>

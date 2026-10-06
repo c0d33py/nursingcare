@@ -37,7 +37,7 @@ const website = { '@type': 'WebSite', name: site.name, url: new URL(href('/'), A
         </p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row" data-hero-ctas>
           <a href={href('/book-a-visit')} class="btn btn-primary">Book a home visit<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
-          <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="hero"><Icon name="message-circle" size={20} />WhatsApp us</a>
+          <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="hero"><Icon name="message-circle" size={18} />WhatsApp us</a>
         </div>
         <p class="mt-4 text-muted">
           or call <a href={site.phone.href} class="font-semibold text-ink underline decoration-accent decoration-2 underline-offset-4" data-umami-event="call_click" data-umami-event-placement="hero">{site.phone.display}</a>, day or night

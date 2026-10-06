@@ -158,8 +158,8 @@ const hideBook = path.startsWith(href('/book-a-visit'));
     <div class="space-y-3 border-t border-line bg-cream px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
       <a href={href('/book-a-visit')} class="btn btn-primary btn-block">Book a home visit</a>
       <div class="grid grid-cols-2 gap-3">
-        <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener"><Icon name="message-circle" size={20} />WhatsApp</a>
-        <a href={site.phone.href} class="btn btn-outline"><Icon name="phone" size={20} />Call</a>
+        <a href={waLink()} class="btn btn-wa" target="_blank" rel="noopener"><Icon name="message-circle" size={18} />WhatsApp</a>
+        <a href={site.phone.href} class="btn btn-outline"><Icon name="phone" size={18} />Call</a>
       </div>
       <p class="text-center text-sm text-muted">{site.address.full} · Available 24/7</p>
     </div>
@@ -179,19 +179,19 @@ const hideBook = path.startsWith(href('/book-a-visit'));
   .site-header .header-logo { transform-origin: left center; transition: transform 240ms var(--ease-out); }
   .site-header[data-scrolled] { border-color: var(--color-line); box-shadow: 0 6px 24px rgb(16 36 58 / 0.06); }
   @media (min-width: 1024px) {
-    .site-header[data-scrolled] > div { height: 64px; }
+    .site-header[data-scrolled] > div { height: 58px; }
     .site-header[data-scrolled] .header-logo { transform: scale(0.9); }
   }
 
   .nav-link {
     position: relative;
     display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap;
-    min-height: 44px; padding: 0 0.6rem;
+    min-height: 40px; padding: 0 0.7rem;
     font-weight: 600; font-size: 1rem; color: var(--color-ink);
     border-radius: 999px; cursor: pointer;
   }
   .nav-link::after {
-    content: ""; position: absolute; left: 0.6rem; right: 0.6rem; bottom: 6px; height: 2px;
+    content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 6px; height: 2px;
     background: var(--color-accent); transform: scaleX(0); transform-origin: left;
     transition: transform 240ms var(--ease-out);
   }
@@ -228,8 +228,8 @@ const hideBook = path.startsWith(href('/book-a-visit'));
   @keyframes sheet-in { from { transform: translateX(100%); } }
   .m-group, .m-link { border-bottom: 1px solid var(--color-line); }
   .m-group summary, .m-link {
-    display: flex; align-items: center; justify-content: space-between; min-height: 56px;
-    font-size: 1.15rem; font-weight: 600; color: var(--color-ink); cursor: pointer; list-style: none;
+    display: flex; align-items: center; justify-content: space-between; min-height: 50px;
+    font-size: 1.07rem; font-weight: 600; color: var(--color-ink); cursor: pointer; list-style: none;
   }
   .m-group summary::-webkit-details-marker { display: none; }
   .m-group summary svg { transition: transform 200ms; }

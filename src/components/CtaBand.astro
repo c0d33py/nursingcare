@@ -35,13 +35,13 @@ const phone = variant === 'overseas' ? site.phone.intl : site.phone.display;
     <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" data-reveal style="--i:2">
       {variant === 'overseas' ? (
         <>
-          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="cta_band"><Icon name="message-circle" size={20} />{waLabel}</a>
+          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="cta_band"><Icon name="message-circle" size={18} />{waLabel}</a>
           <a href={bookHref} class="btn btn-light">Request a call back</a>
         </>
       ) : (
         <>
           <a href={bookHref} class="btn btn-primary !bg-accent !text-ink hover:!bg-[#f0b955]">{bookLabel}<Icon name="arrow-right" size={18} class="btn-arrow" /></a>
-          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="cta_band"><Icon name="message-circle" size={20} />{waLabel}</a>
+          <a href={wa} class="btn btn-wa" target="_blank" rel="noopener" data-umami-event="whatsapp_click" data-umami-event-placement="cta_band"><Icon name="message-circle" size={18} />{waLabel}</a>
         </>
       )}
     </div>
